@@ -8,9 +8,7 @@
 """
 
 def delete_duplicates(books):
-    """
-    Deletes duplicate entries from the list of books.
-    """
+    # Deletes duplicate entries from the list of books.
     unique_books = []
     for book in books:
         if book not in unique_books:
@@ -18,21 +16,15 @@ def delete_duplicates(books):
     return unique_books
 
 def sort_by_cost(books):
-    """
-    Displays the books in ascending order based on cost.
-    """
+    # Displays the books in ascending order based on cost.
     return sorted(books, key=lambda x: x[1]) 
 
 def count_expensive_books(books):
-    """
-    Counts the number of books with cost more than 500.
-    """
+    # Counts the number of books with cost more than 500.
     return sum(1 for book in books if book[1] > 500)
 
 def copy_cheap_books(books):
-    """
-    Creates a new list of books with cost less than 500.
-    """
+    # Creates a new list of books with cost less than 500.
     return [book for book in books if book[1] < 500]
 
 # Example usage
@@ -54,7 +46,6 @@ for book in sorted_books:
     print(f"Name: {book[0]}, Cost: {book[1]}")
 
 print(f"\nNumber of books with cost more than 500: {count_expensive_books(unique_books)}")
-
 print("\nBooks with cost less than 500:")
 cheap_books = copy_cheap_books(unique_books)
 for book in cheap_books:

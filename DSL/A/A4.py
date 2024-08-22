@@ -3,41 +3,16 @@
 """
 
 def deposit(balance, amount):
-    """
-    Deposits the given amount to the current balance.
-    
-    Args:
-        balance (float): The current balance of the bank account.
-        amount (float): The amount to be deposited.
-    
-    Returns:
-        float: The updated balance after the deposit.
-    """
     return balance + amount
 
 def withdraw(balance, amount):
-    """
-    Withdraws the given amount from the current balance, if the balance is sufficient.
-    
-    Args:
-        balance (float): The current balance of the bank account.
-        amount (float): The amount to be withdrawn.
-    
-    Returns:
-        float: The updated balance after the withdrawal, or the current balance if the withdrawal is not allowed.
-    """
     if balance >= amount:
         return balance - amount
     else:
         return balance
 
-# Read the transaction log from console input
-transactions = input("Enter the transaction log (e.g., D 300, D 300, W 200, D 100): ").split(", ")
-
-# Initialize the balance
+transactions = input("Enter the transaction log (EX: D 300, D 300, W 200, D 100): ").split(", ")
 balance = 0
-
-# Process the transactions
 for transaction in transactions:
     operation, amount = transaction.split()
     amount = float(amount)

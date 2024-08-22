@@ -9,9 +9,7 @@ d) Number of students who play cricket and football but not badminton.
 """
 
 def cricket_badminton(cricket, badminton):
-    """
-    Returns a list of students who play both cricket and badminton.
-    """
+    # Returns a list of students who play both cricket and badminton.
     result = []
     for student in cricket:
         if student in badminton:
@@ -19,9 +17,7 @@ def cricket_badminton(cricket, badminton):
     return result
 
 def either_not_both(cricket, badminton):
-    """
-    Returns a list of students who play either cricket or badminton but not both.
-    """
+    # Returns a list of students who play either cricket or badminton but not both.
     result = []
     for student in cricket:
         if student not in badminton:
@@ -32,9 +28,7 @@ def either_not_both(cricket, badminton):
     return result
 
 def neither(cricket, badminton, football):
-    """
-    Returns the number of students who play neither cricket nor badminton.
-    """
+    # Returns the number of students who play neither cricket nor badminton.
     all_students = set()
     for student in cricket:
         all_students.add(student)
@@ -44,16 +38,12 @@ def neither(cricket, badminton, football):
         all_students.add(student)
     
     cricket_badminton_students = set(cricket_badminton(cricket, badminton))
-    
     neither_cricket_nor_badminton = all_students - cricket_badminton_students - set(cricket) - set(badminton)
-    
     return len(neither_cricket_nor_badminton)
 
 
 def cricket_football_not_badminton(cricket, badminton, football):
-    """
-    Returns the number of students who play cricket and football but not badminton.
-    """
+    # Returns the number of students who play cricket and football but not badminton.
     result = 0
     for student in cricket:
         if student in football and student not in badminton:
@@ -65,15 +55,11 @@ def cricket_football_not_badminton(cricket, badminton, football):
 cricket = ['A1', 'A2', 'A3', 'A4', 'A5']
 badminton = ['B1', 'B2', 'B3', 'A3', 'C2']
 football = ['B1', 'B2', 'A2', 'C1', 'C2']
-
 print("Students who play both cricket and badminton:")
 print(cricket_badminton(cricket, badminton))
-
 print("\nStudents who play either cricket or badminton but not both:")
 print(either_not_both(cricket, badminton))
-
 print(f"\nNumber of students who play neither cricket nor badminton: {neither(cricket, badminton, football)}")
-
 print(f"\nNumber of students who play cricket and football but not badminton: {cricket_football_not_badminton(cricket, badminton, football)}")
 
 """

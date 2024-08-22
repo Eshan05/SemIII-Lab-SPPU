@@ -8,30 +8,22 @@
 """
 
 def average_score(marks):
-    """
-    Computes the average score of the class.
-    """
+    # Computes the average score of the class.
     total_score = sum(score for score in marks if score >= 0)
     total_students = sum(1 for score in marks if score >= 0)
     return total_score / total_students
 
 def highest_lowest_score(marks):
-    """
-    Returns the highest and lowest scores of the class.
-    """
+    # Returns the highest and lowest scores of the class.
     valid_scores = [score for score in marks if score >= 0]
     return max(valid_scores), min(valid_scores)
 
 def absent_count(marks):
-    """
-    Returns the count of students who were absent for the test.
-    """
+    # Returns the count of students who were absent for the test.
     return sum(1 for score in marks if score < 0)
 
 def most_frequent_mark(marks):
-    """
-    Displays the mark with the highest frequency.
-    """
+    # Displays the mark with the highest frequency.
     mark_counts = {}
     for score in marks:
         if score >= 0:
