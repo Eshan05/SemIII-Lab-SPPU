@@ -3,40 +3,29 @@
 """
 
 def construct_magic_square(n):
-    """Constructs an n x n magic square for odd n using the Siamese method."""
     if n % 2 == 0:
         raise ValueError("This method only works for odd-sized magic squares.")
-    
-    # Initialize an n x n matrix with zeros
     M = [[0] * n for _ in range(n)]
-
-    # Starting position
-    i, j = 0, n // 2
+    i, j = 0, n // 2 # Starting
     for num in range(1, n * n + 1):
         M[i][j] = num
         # Compute new position
         new_i, new_j = (i - 1) % n, (j + 1) % n
-        
         if M[new_i][new_j]:  # If the new position is occupied
             new_i, new_j = (i + 1) % n, j  # Move down
-        
         i, j = new_i, new_j
-
     return M
 
 def scale_magic_square(M, desired_sum):
-    """Scale the magic square so that the sum of each row, column, and diagonal equals the desired sum."""
     n = len(M)
     current_sum = n * (n * n + 1) // 2
     factor = desired_sum / current_sum
-    
     # Scale each element in the matrix
     scaled_matrix = [[int(round(factor * M[i][j])) for j in range(n)] for i in range(n)]
-
     return scaled_matrix
 
 def display_matrix(M):
-    """Display the matrix and the magic sum."""
+    # Display the matrix and the magic sum.
     n = len(M)
     magic_sum = sum(M[0])
     print(f"Magic Square Matrix ({n} x {n}):")
@@ -49,7 +38,6 @@ def main():
         print("\n1: Find Magic Square")
         print("2: Exit")
         choice = input("Enter your choice: ").strip()
-        
         if choice == '2':
             print("End of Program")
             break
@@ -59,9 +47,7 @@ def main():
                 if n % 2 == 0 or n <= 0:
                     print("The size must be a positive odd number.")
                     continue
-                
                 desired_sum = int(input("\nEnter the desired sum for each row, column, and diagonal: ").strip())
-                
                 M = construct_magic_square(n)
                 M_scaled = scale_magic_square(M, desired_sum)
                 display_matrix(M_scaled)
