@@ -1,4 +1,5 @@
 """
+* Eshan Nahar
 2. Write a Python program to store marks scored in subject “Fundamental of Data Structure” by N students in the class. Write functions to compute following:
 
 	a) The average score of class 
