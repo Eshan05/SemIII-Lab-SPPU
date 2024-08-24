@@ -10,46 +10,46 @@ d) Number of students who play cricket and football but not badminton.
 """
 
 def cricket_badminton(cricket, badminton):
-    # Returns a list of students who play both cricket and badminton.
-    result = []
-    for student in cricket:
-        if student in badminton:
-            result.append(student)
-    return result
+	# Returns a list of students who play both cricket and badminton.
+	result = []
+	for student in cricket:
+		if student in badminton:
+			result.append(student)
+	return result
 
 def either_not_both(cricket, badminton):
-    # Returns a list of students who play either cricket or badminton but not both.
-    result = []
-    for student in cricket:
-        if student not in badminton:
-            result.append(student)
-    for student in badminton:
-        if student not in cricket:
-            result.append(student)
-    return result
+	# Returns a list of students who play either cricket or badminton but not both.
+	result = []
+	for student in cricket:
+		if student not in badminton:
+			result.append(student)
+	for student in badminton:
+		if student not in cricket:
+			result.append(student)
+	return result
 
 def neither(cricket, badminton, football):
-    # Returns the number of students who play neither cricket nor badminton.
-    all_students = set()
-    for student in cricket:
-        all_students.add(student)
-    for student in badminton:
-        all_students.add(student)
-    for student in football:
-        all_students.add(student)
-    
-    cricket_badminton_students = set(cricket_badminton(cricket, badminton))
-    neither_cricket_nor_badminton = all_students - cricket_badminton_students - set(cricket) - set(badminton)
-    return len(neither_cricket_nor_badminton)
+	# Returns the number of students who play neither cricket nor badminton.
+	all_students = set()
+	for student in cricket:
+		all_students.add(student)
+	for student in badminton:
+		all_students.add(student)
+	for student in football:
+		all_students.add(student)
+		
+	cricket_badminton_students = set(cricket_badminton(cricket, badminton))
+	neither_cricket_nor_badminton = all_students - cricket_badminton_students - set(cricket) - set(badminton)
+	return len(neither_cricket_nor_badminton)
 
 
 def cricket_football_not_badminton(cricket, badminton, football):
-    # Returns the number of students who play cricket and football but not badminton.
-    result = 0
-    for student in cricket:
-        if student in football and student not in badminton:
-            result += 1
-    return result
+	# Returns the number of students who play cricket and football but not badminton.
+	result = 0
+	for student in cricket:
+		if student in football and student not in badminton:
+			result += 1
+	return result
 
 
 # Sample data

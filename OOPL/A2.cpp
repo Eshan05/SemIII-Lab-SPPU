@@ -9,19 +9,19 @@ using namespace std;
 
 class Address {
 	private:
-    string street;
-    string city;
-    string state;
-    string country;
-    int zipCode;
+		string street;
+		string city;
+		string state;
+		string country;
+		int zipCode;
 	public:
-    Address(string st, string c, string s, string co, int zip) : street(st), city(c), state(s), country(co), zipCode(zip) {}
-    friend ostream& operator<<(ostream& os, const Address& addr);
+		Address(string st, string c, string s, string co, int zip) : street(st), city(c), state(s), country(co), zipCode(zip) {}
+		friend ostream& operator<<(ostream& os, const Address& addr);
 };
 
 ostream& operator<<(ostream& os, const Address& addr) {
-  os << addr.street << ", " << addr.city << ", " << addr.state << ", " << addr.country << ", " << addr.zipCode;
-  return os;
+	os << addr.street << ", " << addr.city << ", " << addr.state << ", " << addr.country << ", " << addr.zipCode;
+	return os;
 }
 
 class Student {
@@ -44,15 +44,15 @@ class Student {
 			totalStudents++;
 		}
 
-    Student() : name("Unknown"), rollNumber(0), className("Unknown"), division('A'), dateOfBirth("01/01/1900"), bloodGroup("Unknown"), telephoneNumber(0), drivingLicenseNumber("Unknown") {
+		Student() : name("Unknown"), rollNumber(0), className("Unknown"), division('A'), dateOfBirth("01/01/1900"), bloodGroup("Unknown"), telephoneNumber(0), drivingLicenseNumber("Unknown") {
 			contactAddress = new Address("Unknown", "Unknown", "Unknown", "Unknown", 0);
 			totalStudents++;
-    }
+		}
 
-    Student(const Student& other) : name(other.name), rollNumber(other.rollNumber), className(other.className), division(other.division), dateOfBirth(other.dateOfBirth), bloodGroup(other.bloodGroup), telephoneNumber(other.telephoneNumber), drivingLicenseNumber(other.drivingLicenseNumber) {
+		Student(const Student& other) : name(other.name), rollNumber(other.rollNumber), className(other.className), division(other.division), dateOfBirth(other.dateOfBirth), bloodGroup(other.bloodGroup), telephoneNumber(other.telephoneNumber), drivingLicenseNumber(other.drivingLicenseNumber) {
 			contactAddress = new Address(*other.contactAddress);
 			totalStudents++;
-    }
+		}
 
     ~Student() {
 			delete contactAddress;
@@ -146,7 +146,7 @@ int main() {
 				students[studentCount++] = new Student(name, rollNumber, className, division, dateOfBirth, bloodGroup, street, city, state, country, zipCode, telephoneNumber, drivingLicenseNumber);
 				cout << "Student added successfully!" << endl;
 				break;
-      }
+			}
 			case 2: { // Update
 				int rollNumberToUpdate;
 				cout << "Enter the roll number of the student to update: ";
@@ -193,14 +193,14 @@ int main() {
 			case 5: cout << "Total Students: " << Student::getTotalStudents() << endl; break;
 			case 6: cout << "Exiting the program." << endl; break;
 			default: cout << "Invalid choice! Please try again." << endl;
-    }
+		}
 
 		// Clear input buffer to prevent infinite loop on invalid input
 		if (cin.fail()) {
 				cin.clear();
 				cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
 		}
-  } while (choice != 6);
+	} while (choice != 6);
 	for (int i = 0; i < studentCount; i++) delete students[i];
 	return 0;
 }

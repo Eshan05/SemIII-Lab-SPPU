@@ -38,44 +38,44 @@ class Complex {
 };
 
 int main() {
-    cout << "Eshan Nahar" << endl;
-    Complex a(0, 0); 
-    Complex b(0, 0); 
-    int choice;
-    do {
-        cout << "\nMenu:\n";
-        cout << "1. Input Complex Number A\n";
-        cout << "2. Input Complex Number B\n";
-        cout << "3. Add A and B\n";
-        cout << "4. Multiply A and B\n";
-        cout << "5. Display A\n";
-        cout << "6. Display B\n";
-        cout << "7. Exit\n";
-        cout << "Enter your choice: ";
-        cin >> choice;
-        switch (choice) {
-            case 1: cout << "Enter complex number A (Format: a + bi): "; cin >> a; break;
-            case 2: cout << "Enter complex number B (Format: a + bi): "; cin >> b; break;
-            case 3: {
-                Complex sum = a + b;
-                cout << "Sum: " << sum << endl;
-                break;
-            }
-            case 4: {
-                Complex product = a * b;
-                cout << "Product: " << product << endl;
-                break;
-            }
-            case 5: cout << "Complex Number A: " << a << endl; break;
-            case 6: cout << "Complex Number B: " << b << endl; break;
-            case 7: cout << "Exiting the program." << endl; break;
-            default: cout << "Invalid choice! Please try again." << endl;
-        }
-        if (cin.fail()) {
-            cin.clear(); 
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		cout << "Eshan Nahar" << endl;
+		Complex a(0, 0); 
+		Complex b(0, 0); 
+		int choice;
+		do {
+				cout << "\nMenu:\n";
+				cout << "1. Input Complex Number A\n";
+				cout << "2. Input Complex Number B\n";
+				cout << "3. Add A and B\n";
+				cout << "4. Multiply A and B\n";
+				cout << "5. Display A\n";
+				cout << "6. Display B\n";
+				cout << "7. Exit\n";
+				cout << "Enter your choice: ";
+				cin >> choice;
+				switch (choice) {
+						case 1: cout << "Enter complex number A (Format: a + bi): "; cin >> a; break;
+						case 2: cout << "Enter complex number B (Format: a + bi): "; cin >> b; break;
+						case 3: {
+								Complex sum = a + b;
+								cout << "Sum: " << sum << endl;
+								break;
+						}
+						case 4: {
+								Complex product = a * b;
+								cout << "Product: " << product << endl;
+								break;
+						}
+						case 5: cout << "Complex Number A: " << a << endl; break;
+						case 6: cout << "Complex Number B: " << b << endl; break;
+						case 7: cout << "Exiting the program." << endl; break;
+						default: cout << "Invalid choice! Please try again." << endl;
+				}
+				if (cin.fail()) {
+						cin.clear(); 
+						cin.ignore(numeric_limits<streamsize>::max(), '\n');
 						cout << "Invalid input. Please try again." << endl;
-        }
-    } while (choice != 7);
-    return 0;
+				}
+		} while (choice != 7);
+		return 0;
 }

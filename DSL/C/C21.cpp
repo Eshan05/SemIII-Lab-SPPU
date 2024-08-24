@@ -1,3 +1,4 @@
+// * Eshan Nahar
 // 21. WCP for storing appointment schedule for day. Appointments are booked randomly using linked list. Set start and end time and min and max duration for visit slot. Write functions for
 
 //   A) Display free slots 

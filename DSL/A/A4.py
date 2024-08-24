@@ -4,23 +4,23 @@
 """
 
 def deposit(balance, amount):
-    return balance + amount
+	return balance + amount
 
 def withdraw(balance, amount):
-    if balance >= amount:
-        return balance - amount
-    else:
-        return balance
+	if balance >= amount:
+		return balance - amount
+	else:
+		return balance
 
 transactions = input("Enter the transaction log (EX: D 300, D 300, W 200, D 100): ").split(", ")
 balance = 0
 for transaction in transactions:
-    operation, amount = transaction.split()
-    amount = float(amount)
-    if operation == "D":
-        balance = deposit(balance, amount)
-    elif operation == "W":
-        balance = withdraw(balance, amount)
+	operation, amount = transaction.split()
+	amount = float(amount)
+	if operation == "D":
+		balance = deposit(balance, amount)
+	elif operation == "W":
+		balance = withdraw(balance, amount)
 
 # Print the final balance
 print(f"The net amount in the bank account is: {balance}")

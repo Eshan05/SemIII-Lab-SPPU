@@ -10,39 +10,39 @@
 """
 
 def longest_word(string):
-    words = string.split()
-    longest_word = max(words, key=len)
-    print(f"The word with the longest length is: {longest_word}")
+	words = string.split()
+	longest_word = max(words, key=len)
+	print(f"The word with the longest length is: {longest_word}")
 
 def char_frequency(string, char):
-    count = string.count(char)
-    print(f"The frequency of '{char}' in the string is: {count}")
+	count = string.count(char)
+	print(f"The frequency of '{char}' in the string is: {count}")
 
 def is_palindrome(string):
-    if string == string[::-1]:
-        print("The string is a palindrome.")
-    else:
-        print("The string is not a palindrome.")
+	if string == string[::-1]:
+		print("The string is a palindrome.")
+	else:
+		print("The string is not a palindrome.")
 
 def find_substring(string, substring):
-    index = string.find(substring)
-    if index == -1:
-        print(f"The substring '{substring}' is not found in the string.")
-    else:
-        print(f"The first appearance of the substring '{substring}' is at index {index}.")
+	index = string.find(substring)
+	if index == -1:
+		print(f"The substring '{substring}' is not found in the string.")
+	else:
+		print(f"The first appearance of the substring '{substring}' is at index {index}.")
 
 def word_count(string):
-    word_counts = {}
-    words = string.split()
-    for word in words:
-        if word in word_counts:
-            word_counts[word] += 1
-        else:
-            word_counts[word] = 1
-    
-    print("Word counts:")
-    for word, count in word_counts.items():
-        print(f"{word}: {count}")
+	word_counts = {}
+	words = string.split()
+	for word in words:
+		if word in word_counts:
+			word_counts[word] += 1
+		else:
+			word_counts[word] = 1
+		
+	print("Word counts:")
+	for word, count in word_counts.items():
+		print(f"{word}: {count}")
 
 # Example usage
 input_string = "The quick brown fox jumps over the lazy dog. The dog barks at the fox."
