@@ -17,6 +17,44 @@ def construct_magic_square(n):
 		i, j = new_i, new_j
 	return M
 
+"""
+As per PDF, we if take position via decrementing row number of previous by 1
+and incrementing the column number of previous by 1. If -1 it wrap to n-1 and column becomes n then it wraps to 0. If occupied column decrements by 2 and row increments by 1. If i=-1 and 
+def generateMagicSquare(size):
+	magicSquare=[[0 for x in range(size)] for y in range(size)]
+	i = size // 2 # Middle 
+	j = size - 1
+	num = 1
+	while num <= (size*size):
+		if i == -1 and j == size: # Outside
+			j = size - 2
+			i = 0
+		else: 
+			if j == size: # Wrap for column
+				j = 0
+			if i < 0:
+				i = size - 1
+		if magicSquare[i][j] != 0: # Occupied
+			j -= 2
+			i += 1
+			continue
+		
+		magicSquare[i][j] = num
+		num += 1
+		# Next position
+		j += 1
+		i -= 1
+		sum = size * (size*size+1)//2
+		print("Magic Sum is: ",sum)
+		print(f"{size} x {size} Magic Square is: \n")
+		for i in range(0, size):
+			for j in range(0, size):
+				print(' %2d ' % (magicSquare[i][j]), end=' | ')
+				# Right aligned with width 2
+				if j == size - 1:
+					print()
+"""
+
 def scale_magic_square(M, desired_sum):
 	n = len(M)
 	current_sum = n * (n * n + 1) // 2

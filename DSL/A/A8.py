@@ -21,11 +21,28 @@ def findSaddlePoint(matrix):
 			return(i, min_row_index)
 	return None
 
-matrix = [
+def inputMatrix():
+	print("Enter degree of matrix")
+	size = int(input().strip())
+	matrix = []
+	print("Enter matrix rows (Each on new line with spaces):")
+	for i in range(size):
+		row = list(map(int, input().strip().split()))
+		if len(row) != size:
+			print(f"{size} != {len(row)}: Please enter the row again.")
+			row = list(map(int, input().strip().split()))
+		matrix.append(row)
+	return matrix
+
+"""matrix = [
 	[9, 8, 17],
 	[2, 8, 9],
 	[6, 8, 4]
-]
+]"""
+matrix = inputMatrix()
+print("The matrix entered:")
+for row in matrix:
+	print(row)
 
 result = findSaddlePoint(matrix)
 if result:
