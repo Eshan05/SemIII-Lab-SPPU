@@ -9,7 +9,7 @@ class Searching:
   def __init__(self):
     self.__listLength = 0
     self.__searchList = []
-    self.__originalList = []
+    self.__originalList = [] # For binary and fibonacci
 
   def accept(self):
     self.__listLength = int(input("Enter the number of elements in list: "))
