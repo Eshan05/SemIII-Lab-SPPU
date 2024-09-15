@@ -11,12 +11,12 @@
 using namespace std;
 
 class node {
-public: // Clearing doubly linked
+public: // Clearly doubly linked
 	node *next;
 	node *prev;
 	int seat;
 	string id;
-	int status; // 0 = available, 1 = booked
+	int status;
 };
 
 class cinemax {
@@ -61,8 +61,7 @@ void cinemax::book() {
 		cout << "\nEnter seat number to be booked (1-70): ";
 		cin >> seatNumber;
 		if (seatNumber < 1 || seatNumber > 70) {
-			cout << "Invalid seat number. Please enter a number between 1 and "
-			        "70.\n";
+			cout << "Invalid seat number. Please enter a number between 1 and 70.\n";
 			continue;
 		}
 		cout << "Enter your ID number: ";
@@ -138,8 +137,7 @@ int main() {
 		cout << "\n*******************************\n";
 		cout << "CINEMAX MOVIE THEATRE\n";
 		cout << "*******************************\n";
-		cout << "\nEnter Choice\n1.Current Seat Status\n2.Book "
-		        "Seat\n3.Available Seat\n4.Cancel Seat\n";
+		cout << "\nEnter Choice\n1.Current Seat Status\n2.Book Seat\n3.Available Seat\n4.Cancel Seat\n";
 		cin >> choice;
 		switch (choice) {
 			case 1: obj.display(); break;
