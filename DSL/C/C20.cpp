@@ -69,7 +69,7 @@ void cinemax::book() {
 		node *temp = head;
 		while (temp->seat != seatNumber)
 			temp = temp->next;
-
+		// Finding node and seeing if it's booked
 		if (temp->status == 1) cout << "Seat already booked!\n";
 		else {
 			temp->status = 1;
@@ -96,7 +96,7 @@ void cinemax::cancel() {
 		node *temp = head;
 		while (temp->seat != seatNumber) {
 			temp = temp->next;
-		}
+		} 
 		if (temp->status == 0) cout << "Seat not booked yet!\n";
 		else {
 			if (temp->id == userId) {
@@ -134,9 +134,9 @@ int main() {
 	char cont = 'y';
 	while (cont == 'y') {
 		obj.display();
-		cout << "\n*******************************\n";
-		cout << "CINEMAX MOVIE THEATRE\n";
-		cout << "*******************************\n";
+		cout << "\n****************************\n";
+		cout << "   CINEMAX MOVIE THEATRE\n";
+		cout << "****************************\n";
 		cout << "\nEnter Choice\n1.Current Seat Status\n2.Book Seat\n3.Available Seat\n4.Cancel Seat\n";
 		cin >> choice;
 		switch (choice) {
