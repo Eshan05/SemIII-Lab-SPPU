@@ -9,7 +9,7 @@ struct Node {
 	std::vector<Node *> children;
 
 	Node(bool atomic, const std::string &val = "")
-			: isAtomic(atomic), value(val) {}
+		: isAtomic(atomic), value(val) {}
 };
 
 

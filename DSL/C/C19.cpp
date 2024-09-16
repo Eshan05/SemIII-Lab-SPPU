@@ -271,7 +271,7 @@ node* List::readAt(int i) {
 int main() {
 	List L, X, Y;
 	while(1) {
-			int c;
+		int c;
 		cout << "Enter your choice:\n1. Enter List A\n2. Enter List B\n3. Concatenate\n0. Exit\n-- Enter your choice --" << endl;
 		cin >> c;
 		switch(c) {

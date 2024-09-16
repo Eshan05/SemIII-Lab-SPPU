@@ -44,20 +44,16 @@ class AppointmentList {
 				int prevEndHour = dayStartHour;
 				int prevEndMinute = dayStartMinute;
 				while (current) {
-						if (current->startHour > prevEndHour || (current->startHour == prevEndHour && current->startMinute > prevEndMinute)) {
-								// Show free slot if there is a gap
-								cout << "Free slot: " << formatTime(prevEndHour, prevEndMinute) 
-										<< " to " << formatTime(current->startHour, current->startMinute) << endl;
-						}
-						// Show booked slot with ID
-						cout << "Slot (" << current->id << "): " << formatTime(current->startHour, current->startMinute) 
-								<< " to " << formatTime(current->endHour, current->endMinute) << endl;
+					if (current -> startHour > prevEndHour || (current -> startHour == prevEndHour && current -> startMinute > prevEndMinute)) {
+					cout << "Free slot: " << formatTime(prevEndHour, prevEndMinute) << " to " << formatTime(current -> startHour, current -> startMinute) << endl;
+					}
+					// Show booked slot with ID
+					cout << "Slot (" << current -> id << "): " << formatTime(current -> startHour, current -> startMinute) << " to " << formatTime(current -> endHour, current -> endMinute) << endl;
 
-						prevEndHour = current->endHour;
-						prevEndMinute = current->endMinute;
-						current = current->next;
+					prevEndHour = current -> endHour;
+					prevEndMinute = current -> endMinute;
+					current = current -> next;
 				}
-
 				if (prevEndHour < dayEndHour || (prevEndHour == dayEndHour && prevEndMinute < dayEndMinute)) {
 						cout << "Free slot: " << formatTime(prevEndHour, prevEndMinute) 
 								<< " to " << formatTime(dayEndHour, dayEndMinute) << endl;
@@ -65,70 +61,70 @@ class AppointmentList {
 		}
 
 		string formatTime(int hour, int minute) {
-				return (hour < 10 ? "0" : "") + to_string(hour) + ":" + (minute < 10 ? "0" : "") + to_string(minute);
+			return (hour < 10 ? "0" : "") + to_string(hour) + ":" + (minute < 10 ? "0" : "") + to_string(minute);
 		}
 
 		void book_App() {
-				int startHour, startMinute, endHour, endMinute;
-				string id;
+			int startHour, startMinute, endHour, endMinute;
+			string id;
 
-				cout << "Enter appointment start time (hour minute): ";
-				cin >> startHour >> startMinute;
-				cout << "Enter appointment end time (hour minute): ";
-				cin >> endHour >> endMinute;
-				cout << "Enter your ID: ";
-				cin >> id;
+			cout << "Enter appointment start time (hour minute): ";
+			cin >> startHour >> startMinute;
+			cout << "Enter appointment end time (hour minute): ";
+			cin >> endHour >> endMinute;
+			cout << "Enter your ID: ";
+			cin >> id;
 
-				if (endHour < startHour || (endHour == startHour && endMinute <= startMinute)) {
-						cout << "Invalid appointment duration.\n";
-						return;
-				}
+			if (endHour < startHour || (endHour == startHour && endMinute <= startMinute)) {
+				cout << "Invalid appointment duration.\n";
+				return;
+			}
 
-				Appointment* newApp = new Appointment(startHour, startMinute, endHour, endMinute, id);
-				if (!head || compareAppointments(newApp, head) < 0) {
-						newApp->next = head;
-						head = newApp;
-						cout << "Appointment booked.\n";
-						return;
-				}
-
-				Appointment* current = head;
-				while (current->next && compareAppointments(newApp, current->next) >= 0) current = current->next;
-
-				newApp->next = current->next;
-				current->next = newApp;
+			Appointment* newApp = new Appointment(startHour, startMinute, endHour, endMinute, id);
+			if (!head || compareAppointments(newApp, head) < 0) {
+				newApp->next = head;
+				head = newApp;
 				cout << "Appointment booked.\n";
+				return;
+			}
+
+			Appointment* current = head;
+			while (current->next && compareAppointments(newApp, current->next) >= 0) current = current->next;
+
+			newApp->next = current->next;
+			current->next = newApp;
+			cout << "Appointment booked.\n";
 		}
 
 		void cancel_App() {
-				int startHour, startMinute, endHour, endMinute;
-				string id;
+			int startHour, startMinute, endHour, endMinute;
+			string id;
 
-				cout << "Enter appointment start time (hour minute): ";
-				cin >> startHour >> startMinute;
-				cout << "Enter appointment end time (hour minute): ";
-				cin >> endHour >> endMinute;
-				cout << "Enter your ID: ";
-				cin >> id;
+			cout << "Enter appointment start time (hour minute): ";
+			cin >> startHour >> startMinute;
+			cout << "Enter appointment end time (hour minute): ";
+			cin >> endHour >> endMinute;
+			cout << "Enter your ID: ";
+			cin >> id;
 
-				Appointment* current = head;
-				Appointment* previous = nullptr;
-				while(current && !(current->startHour == startHour &&
-							current->startMinute == startMinute &&
-							current->endHour == endHour && current->endMinute == endMinute &&
-							current->id == id)) {
-						previous = current;
-						current = current->next;
-				}
+			Appointment* current = head;
+			Appointment* previous = nullptr;
+			while(current && !(current->startHour == startHour &&
+						current->startMinute == startMinute &&
+						current->endHour == endHour && current->endMinute == endMinute &&
+						current->id == id)) {
+				previous = current;
+				current = current->next;
+		}
 
-				if (current) {
-						if (previous) previous->next = current->next;
-						else head = current->next;
-						delete current;
-						cout << "Appointment canceled.\n";
-				} else {
-						cout << "Appointment not found.\n";
-				}
+			if (current) {
+				if (previous) previous->next = current->next;
+				else head = current->next;
+				delete current;
+				cout << "Appointment canceled.\n";
+			} else {
+				cout << "Appointment not found.\n";
+			}
 		}
 
 		void sort_App() { sortAppointmentsByTime(); }
@@ -162,26 +158,26 @@ class AppointmentList {
 };
 
 int main() {
-		AppointmentList A1;
-		int ch;
-		while (true) {
-				cout << "\n\n *** Menu ***";
-				cout << "\n 1. Create Appointment Schedule";
-				cout << "\n 2. Display Free Slots";
-				cout << "\n 3. Book an Appointment";
-				cout << "\n 4. Cancel an Appointment";
-				cout << "\n 5. Sort Slots Based on Time";
-				cout << "\n 0. Exit";
-				cout << "\n\n\t Enter your choice: ";
-				cin >> ch;
-				switch (ch) {
-						case 1: A1.create_Shed(); break;
-						case 2: A1.display_Shed(); break;
-						case 3: A1.book_App(); break;
-						case 4: A1.cancel_App(); break;
-						case 5: A1.sort_App(); break;
-						case 0: cout << "Exiting..." << endl; return 0;
-						default: cout << "\n\t Wrong choice!!!\n"; break;
-				}
+	AppointmentList A1;
+	int ch;
+	while (true) {
+		cout << "\n\n *** Menu ***";
+		cout << "\n 1. Create Appointment Schedule";
+		cout << "\n 2. Display Free Slots";
+		cout << "\n 3. Book an Appointment";
+		cout << "\n 4. Cancel an Appointment";
+		cout << "\n 5. Sort Slots Based on Time";
+		cout << "\n 0. Exit";
+		cout << "\n\n\t Enter your choice: ";
+		cin >> ch;
+		switch (ch) {
+				case 1: A1.create_Shed(); break;
+				case 2: A1.display_Shed(); break;
+				case 3: A1.book_App(); break;
+				case 4: A1.cancel_App(); break;
+				case 5: A1.sort_App(); break;
+				case 0: cout << "Exiting..." << endl; return 0;
+				default: cout << "\n\t Wrong choice!!!\n"; break;
 		}
+	}
 }

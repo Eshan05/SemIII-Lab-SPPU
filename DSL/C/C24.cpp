@@ -10,7 +10,7 @@
 #include <vector>
 
 struct Node {
-	bool isAtomic; // True if the node is an atomic value, false if it's a list
+	bool isAtomic;
 	std::string value;            // If isAtomic is true
 	std::vector<Node *> children; //  If isAtomic is false
 
