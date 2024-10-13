@@ -122,13 +122,13 @@
   c) Display members \
   d) Two linked lists exists for two divisions. Concatenate two lists.
 
-21. The ticket booking system of Cinemax theater has to be implemented using C++ program. There are 10 rows and 7 seats in each row. Doubly circular linked list has to be maintained to keep track of free seats at rows. Assume some random booking to start with. Use array to store pointers (Head pointer) to each row. On demand
+20. The ticket booking system of Cinemax theater has to be implemented using C++ program. There are 10 rows and 7 seats in each row. Doubly circular linked list has to be maintained to keep track of free seats at rows. Assume some random booking to start with. Use array to store pointers (Head pointer) to each row. On demand
 
   	a) The list of available seats is to be displayed \
   b) The seats are to be booked \
   c) The booking can be cancelled. 
 
-22. WCP for storing appointment schedule for day. Appointments are booked randomly using linked list. Set start and end time and min and max duration for visit slot. Write functions for
+21. WCP for storing appointment schedule for day. Appointments are booked randomly using linked list. Set start and end time and min and max duration for visit slot. Write functions for
 
   	A) Display free slots \
   B) Book appointment \
@@ -136,29 +136,31 @@
   D) Cancel appointment (Check validity, time bounds, availability) \
   E) Sort list based on time using pointer manipulation
 
-23. Second year Computer Engineering class, set A of students like Vanilla Ice-cream and set B of students like butterscotch ice-cream. WCP to store two sets using linked list. compute and display-
+22. Second year Computer Engineering class, set A of students like Vanilla Ice-cream and set B of students like butterscotch ice-cream. WCP to store two sets using linked list. compute and display-
     
   	a) Set of students who like both vanilla and butterscotch \
   b) Set of students who like either vanilla or butterscotch or not both \
   c) Number of students who like neither vanilla nor butterscotch
 
-25. WCP for storing binary number using doubly linked lists. Write functions-
+23. WCP for storing binary number using doubly linked lists. Write functions-
 
   	a) To compute 1‘s and 2‘s complement  \
-  b) Add two binary numbers \
+  b) Add two binary numbers
 
-26. WCP to realize Set using Generalized Liked List (GLL)
+24. WCP to realize Set using Generalized Liked List (GLL)
 $$A=\lbrace a, b, \lbrace c, d, e, \lbrace\rbrace, \lbrace f,g\rbrace, h, l, \lbrace j,k\rbrace, l, m \rbrace\rbrace$$
 Store and print as set notation
 
-27. A palindrome is a string of character that‘s the same forward and backward. Typically, punctuation, capitalization, and spaces are ignored. For example, “Poor Dan is in a droop” is a palindrome, as can be seen by examining the characters “poor danisinad roop” and observing that they are the same forward and backward. One way to check for a palindrome is to reverse the characters in the string and then compare with them the original-in a palindrome, the sequence will be identical. WCP with functions
+# Group D
+
+25. A palindrome is a string of character that‘s the same forward and backward. Typically, punctuation, capitalization, and spaces are ignored. For example, “Poor Dan is in a droop” is a palindrome, as can be seen by examining the characters “poor danisinad roop” and observing that they are the same forward and backward. One way to check for a palindrome is to reverse the characters in the string and then compare with them the original-in a palindrome, the sequence will be identical. WCP with functions
 
   	a) To print original string followed by reversed string using stack \
   b) To check whether given string is palindrome or not
 
-28. In any language program mostly syntax error occurs due to unbalancing delimiter such as (),{},[]. Write C++ program using stack to check whether given expression is well parenthesized or not.
+26. In any language program mostly syntax error occurs due to unbalancing delimiter such as (),{},[]. Write C++ program using stack to check whether given expression is well parenthesized or not.
 
-29. Implement C++ program for expression conversion as infix to postfix and its evaluation using stack based on given conditions:
+27. Implement C++ program for expression conversion as infix to postfix and its evaluation using stack based on given conditions:
 
   	a) Operands and operator, both must be single character. \
   b) Input Postfix expression must be in a desired format. \
