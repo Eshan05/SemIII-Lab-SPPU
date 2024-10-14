@@ -1,3 +1,6 @@
+// * Eshan Nahar
+// Write C++ program to implement Cohen Southerland line clipping algorithm.
+
 #include<bits/stdc++.h>
 #include<graphics.h>
 using namespace std;

@@ -15,9 +15,9 @@ algorithm. Apply the concept of inheritance.
 6. OR
     1. Design and simulate any data structure like stack or queue visualization using `graphics.h`. Simulation should include all operations performed on designed data structure. Implement the same using OpenGL.
     2. Write C++ program to draw 3-D cube and perform following transformations on it using OpenGL 
-      1. Scaling
-      2. Translation 
-      3. Rotation about an axis (X/Y/Z)
+       1. Scaling
+       2. Translation 
+       3. Rotation about an axis (X/Y/Z)
     3. Write OpenGL program to draw Sun Rise and Sunset.
 7. OR
     1. Write a C++ program to control a ball using arrow keys. Apply the concept of polymorphism
