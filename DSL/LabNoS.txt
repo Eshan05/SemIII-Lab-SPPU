@@ -1,0 +1,17 @@
+A1: Set operations (If else)
+A4: Transaction log (Spilt)
+A5: String operations
+
+B12: Binary & Fibonacci Search
+B14: Selection & Bubble Sort
+B18: Radix sort
+
+C19: Pinnacle Club (Singly LL)
+C22: Vanilla & Butterscotch Ice Cream (LL + Set Operations)
+
+D26: Leetcode 20 (Stack to check opening & closing order)
+D27: Infix to Postfix (Stack)
+
+E29: Queues (Enqueue and Dequeue)
+E31: Double ended queue (Add remove both ends)
+E32: Pizza parlor (Circular Queue)
