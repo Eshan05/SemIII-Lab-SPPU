@@ -58,16 +58,31 @@ void createBook() {
 	string title; float price; int pageCount;
 	cout << "Enter Book Title: ";
 	cin >> title;
+
 	cout << "Enter Book Price: ";
-	cin >> price;
-	cin.ignore(numeric_limits<streamsize>::max(), '\n');
-	// numeric_limits is used to ignore the newline character
-	cout << "Enter Page Count: ";
-	cin >> pageCount;
-	if(cin.fail()) {
-		cout << "Invalid Input for page count" << endl;
-		return;
+	while (true) {
+		cin >> price;
+		if (cin.fail() || price < 0) {
+			cout << "Invalid input for price. Please enter a non-negative number: ";
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		} else {
+			break;
+		}
 	}
+
+	cout << "Enter Page Count: ";
+	while (true) {
+		cin >> pageCount;
+		if (cin.fail() || pageCount < 0) {
+			cout << "Invalid input for page count. Please enter a non-negative integer: ";
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		} else {
+			break;
+		}
+	}
+
 	book.setData(title, price, pageCount);
 	cout << "\n Book Information:" << endl;
 	book.display();
@@ -78,15 +93,31 @@ void createTape() {
 	string title; float price; float playingTime;
 	cout << "Enter Tape Title: ";
 	cin >> title;
+
 	cout << "Enter Tape Price: ";
-	cin >> price;
-	cin.ignore(numeric_limits<streamsize>::max(), '\n');
-	cout << "Enter Playing Time (Minutes): ";
-	cin >> playingTime;
-	if(cin.fail()) {
-		cout << "Invalid Input for playing time" << endl;
-		return;
+	while (true) {
+		cin >> price;
+		if (cin.fail() || price < 0) {
+				cout << "Invalid input for price. Please enter a non-negative number: ";
+				cin.clear();
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		} else {
+			break;
+		}
 	}
+	
+	cout << "Enter Playing Time (Minutes): ";
+	while (true) {
+		cin >> playingTime;
+		if (cin.fail() || playingTime < 0) {
+			cout << "Invalid input for playing time. Please enter a non-negative number: ";
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		} else {
+			break;
+		}
+	}
+
 	tape.setData(title, price, playingTime);
 	cout << "\n Tape Information:" << endl;
 	tape.display();

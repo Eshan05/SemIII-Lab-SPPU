@@ -92,15 +92,16 @@ class PersonalRecordManager {
 			cout << "4. Search Record\n";
 			cout << "5. Delete Record\n";
 			cout << "6. Exit\n";
-			cout << "Enter your choice: ";
-    }
+			
+		}
 };
 
 int main() {
 	PersonalRecordManager manager;
 	int choice;
+	PersonalRecordManager::printMenu();
 	do {
-		PersonalRecordManager::printMenu();
+		cout << "Enter your choice: ";
 		cin >> choice;
 		cin.ignore();
 		switch(choice) {

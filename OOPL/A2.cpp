@@ -95,14 +95,15 @@ int main() {
 	Student* students[100]; // Array to hold pointers to Student objects
 	int studentCount = 0;
 	int choice;
+	cout << "\nMenu:\n";
+	cout << "1. Add Student\n";
+	cout << "2. Update Student\n";
+	cout << "3. Delete Student\n";
+	cout << "4. Display All Students\n";
+	cout << "5. Display Total Students\n";
+	cout << "6. Exit\n";
 	do {
-		cout << "\nMenu:\n";
-		cout << "1. Add Student\n";
-		cout << "2. Update Student\n";
-		cout << "3. Delete Student\n";
-		cout << "4. Display All Students\n";
-		cout << "5. Display Total Students\n";
-		cout << "6. Exit\n";
+		
 		cout << "Enter your choice: ";
 		cin >> choice;
 		switch (choice) {

@@ -25,7 +25,7 @@ int main() {
 	cout << "Enter name of a state: ";
 	getline(cin, stateName);
 	auto it = statePopulation.find(stateName);
-	if(it != statePopulation.end()) cout << "Population of " << stateName << " is " << it->second << "endl";
+	if(it != statePopulation.end()) cout << "Population of " << stateName << " is " << it->second << endl;
 	else cout << "State not present\n";
 	return 0; 
 }
