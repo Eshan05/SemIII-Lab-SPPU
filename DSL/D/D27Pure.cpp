@@ -88,3 +88,5 @@ int main() {
 
 	return 0;
 }
+
+// Input: (3+5)*2

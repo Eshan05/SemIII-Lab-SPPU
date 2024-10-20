@@ -1,6 +1,6 @@
 A1: Set operations (If else)
 A4: Transaction log (Spilt)
-A5: String operations
+A2 or A5: String operations or Student marks
 
 B12: Binary & Fibonacci Search
 B14: Selection & Bubble Sort

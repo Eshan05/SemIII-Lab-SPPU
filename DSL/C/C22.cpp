@@ -68,7 +68,7 @@ Node* intersection(Node* headA, Node* headB) {
 	Node* tempA = headA;
 	while (tempA != nullptr) {
 		if (exists(headB, tempA->studentName)) 
-			insertEnd(result, tempA->studentName);
+			  insertEnd(result, tempA->studentName);
 		tempA = tempA->next;
 	}
 	return result;
@@ -87,7 +87,7 @@ Node* unionSets(Node* headA, Node* headB) {
 	// Add all elements from set B that are not in set A
 	while (tempB != nullptr) {
 		if (!exists(result, tempB->studentName)) 
-			insertEnd(result, tempB->studentName);
+			  insertEnd(result, tempB->studentName);
 		tempB = tempB->next;
 	}
 	
@@ -130,6 +130,14 @@ int countNeither(Node* vanillaList, Node* butterscotchList, int totalStudents) {
 	return totalStudents - countAB;
 }
 
+void deleteList(Node*& head) {
+	while (head != nullptr) {
+		Node* temp = head;
+		head = head->next;
+		delete temp;
+	}
+}
+
 int main() {
 	Node* vanillaList = nullptr;
 	Node* butterscotchList = nullptr;
@@ -157,25 +165,33 @@ int main() {
 		cin.ignore(); // To ignore the newline character left by cin
 		
 		switch (choice) {
-			case 1: 
+			case 1: {
 				Node* both = intersection(vanillaList, butterscotchList);
 				cout << "Students who like both vanilla and butterscotch: ";
-				displayList(both);
+				displayList(both); 
+				deleteList(both);
 				break;
-			case 2:
+			}
+			case 2: {
 				Node* eitherNotBoth = symmetricDifference(vanillaList, butterscotchList);
 				cout << "Students who like either vanilla or butterscotch but not both: ";
 				displayList(eitherNotBoth);
-					break;
-			case 3:
+				deleteList(eitherNotBoth);
+				break;
+			}
+			case 3: {
 				int neitherCount = countNeither(vanillaList, butterscotchList, totalStudents);
 				cout << "Number of students who like neither vanilla nor butterscotch: " << neitherCount << endl;
 				break;
+			}
 			case 4:
 				cout << "Exiting...\n";
 				break;
 			default: cout << "Invalid choice, please try again.\n";
 		}
 	} while (choice != 4);
+
+	deleteList(vanillaList);
+	deleteList(butterscotchList);
 	return 0;
 }

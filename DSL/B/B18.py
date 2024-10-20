@@ -29,9 +29,9 @@ def countingsort(num, k):
     print(num2)
     
 def radixsort(num):
-    print(num)
+    # print(num)
     maximum = max(num)
-    print(maximum)
+    # print(maximum)
     n = 1
     while maximum // n > 0:
         countingsort(num, n)
@@ -59,10 +59,10 @@ num1 = [0] * len(num)
 for i in range(0, len(num)):
     num1[i] = int(num[i]*10) # Convert to integer
 
-print(num1)
-print("Before sorting")
-print(num)
-print("After sorting")
+# print(num1)
+# print("Before sorting")
+# print(num)
+# print("After sorting")
 radixsort(num1)
 num3 = num2[::-1]
 print("Top 5 scores are: ")

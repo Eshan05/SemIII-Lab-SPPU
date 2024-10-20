@@ -26,7 +26,9 @@ bool isValid(string& s) {
 }
 
 int main() {
-	string s = "{[()]}([{])";
+	string s;
+	cin >> s;
+	// string s = "{[()]}([{])";
 	if(isValid(s)) cout << "Valid!";
 	else cout << "Not properly arranged";
 	return 0;

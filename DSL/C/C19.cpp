@@ -215,7 +215,7 @@ void List::op () {
 		switch(choice) {
 			case 1:
 				char c;
-				cout << "\n Enter:\n A. Add President \n B. Add Secretary \n C. Add Member \n0. Prev Menu" << endl;
+				cout << "\n Enter:\n A. Add President \n B. Add Secretary \n C. Add Member \n 0. Prev Menu" << endl;
 				cin >> c;
 				switch(c) {
 					case 'A': insertStart(); break;
@@ -227,7 +227,7 @@ void List::op () {
 
 			case 2:
 				char d;
-				cout << "\n Enter:\n A. Delete President \n B. Delete Secretary \n C. Delete Member \n0. Prev Menu" << endl;
+				cout << "\n Enter:\n A. Delete President \n B. Delete Secretary \n C. Delete Member \n 0. Prev Menu" << endl;
 				cin >> d;
 				switch(d) {
 					case 'A': deleteStart(); break;
