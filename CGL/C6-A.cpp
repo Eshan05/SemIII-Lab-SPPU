@@ -579,3 +579,6 @@ void draw_rectangle() {
     sx4 += 10;
   }
 }
+
+// Original:
+// https://github.com/tharifansari/Graphical-visualization-of-Stack-Queue

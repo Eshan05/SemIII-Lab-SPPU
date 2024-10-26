@@ -1,4 +1,4 @@
-# DSL | CGL | OOPL Codes [WIP]
+# DSL | CGL | OOPL Codes
 
 This repository contains **all** the codes for the 3 labs present in *SPPU Semester III Computer*. You can find syllabus PDF [online](https://pict.edu/time_table_syllabus/CE/SE-Computer-Engg-2019-Patt.pdf). Total codes are (DSL) 32 + (CGL) 16 + (OOPL) 7, this also includes the alternative questions in CGL, all the problem statements are in `README` file in each folder. The following languages and libraries are used in each of the lab. 
 
