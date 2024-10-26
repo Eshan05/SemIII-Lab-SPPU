@@ -13,3 +13,11 @@ To compile in **DSL** use `python ...` or `python3 ...` and `g++ ...`. For **CGL
 1. ⭐ Star this repo if you found it useful!
 2. If you find any errors or something missing then feel free to report it
 3. In DSL `Pure` means without using the in-built functions. Rest are self-explanatory
+4. Do abide by the (Modified) MIT License
+5. ## If you want to run `graphics.h`
+  1. I would suggest **DO NOT** dual boot solely for the purpose of `graphics.h`, if anything you should dualboot for everything BUT `graphics.h`
+  2. Instead just get either VirtualBox or some other VM and install `Ubuntu 16.x` (Xenial) and then follow the GFG tutorial (You may come across `guile` error which you can solve by using steps in [AskUbuntu](https://askubuntu.com/a/1120362)
+  ```shell
+  sudo apt-get install libsdl-image1.2 libsdl-image1.2-dev guile-1.8 guile-1.8-dev libsdl1.2debian libart-2.0-dev libaudiofile-dev libesd0-dev libdirectfb-dev libdirectfb-extra libfreetype6-dev libxext-dev x11proto-xext-dev libfreetype6 libaa1 libaa1-dev libslang2-dev libasound2 libasound2-dev
+  ```
+  3. Now do `graphics.h` programming in the VM. Take screenshots with `PRINT SCREEN` and mail them to yourself
