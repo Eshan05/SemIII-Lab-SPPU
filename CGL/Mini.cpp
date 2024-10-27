@@ -1,10 +1,3 @@
-// * Eshan Nahar
-// Design and implement game / animation clip / Graphics Editor using open
-// source graphics library. Make use of maximum features of Object Oriented
-// Programming
-
-// Rubik Cube in OpenGL 3 x 3 x 3
-
 #include <GL/gl.h>
 #include <GL/glut.h>
 #include <iostream>
@@ -16,7 +9,11 @@ struct CubeRotation {
   GLfloat angle, x, y, z;
 };
 
-vector<CubeRotation> cube_rotations[3][3][3];
+class Camera {
+ public:
+  void setCamera() { gluLookAt(0, 80, 200, 0, 0, 0, 0, 1, 0); }
+};
+
 class Cube {
  public:
   GLfloat size;
@@ -28,9 +25,12 @@ class Cube {
     glPushMatrix();
     glTranslatef((x - 1) * size + x * gap, (y - 1) * size + y * gap,
                  (z - 1) * size + z * gap);
-    for(const auto &rotation : rotations) {
-      glRotatef(rotation.angle, rotation.x, rotation.y, rotation.z);
+
+    // Apply rotations in reverse order to achieve correct visual output
+    for(auto it = rotations.rbegin(); it != rotations.rend(); ++it) {
+      glRotatef(it->angle, it->x, it->y, it->z);
     }
+
     drawFaces();
     glPopMatrix();
   }
@@ -41,7 +41,6 @@ class Cube {
 
  private:
   void drawFaces() {
-    // Define colors for each face of the cube
     GLfloat colors[6][3] = {
       { 1.0f, 0.0f, 0.0f }, // Front
       { 1.0f, 0.5f, 0.0f }, // Back
@@ -51,7 +50,6 @@ class Cube {
       { 1.0f, 1.0f, 1.0f }  // Bottom
     };
 
-    // Draw the six faces of the cube
     const GLfloat vertices[6][4][3] = {
       { { size / 2, size / 2, size / 2 },
         { -size / 2, size / 2, size / 2 },
@@ -90,107 +88,39 @@ class Cube {
   }
 };
 
-class RubiksCube {
+class RubiksCubeRenderer {
  public:
   static const int SIZE = 3;
   Cube *cubes[SIZE][SIZE][SIZE];
-  // vector<CubeRotation> cube_rotations[SIZE][SIZE][SIZE];
+  vector<CubeRotation> cube_rotations[SIZE][SIZE][SIZE];
 
-  RubiksCube(GLfloat cubeSize) {
+  GLfloat angle;
+  GLfloat fAspect;
+  GLfloat cube_size;
+  Camera *camera;
+  GLint rot_x, rot_y, x_0, x_k, y_0, y_k, z_0, z_k;
+  GLint gap;
+  GLint gap_increment;
+
+  RubiksCubeRenderer(GLfloat cubeSize) {
+    cube_size = cubeSize;
+    rot_x = rot_y = 0;
+    gap = 3;
+    gap_increment = 2;
+    camera = new Camera();
+    angle = 45;
+    resetSelectedFace();
+
+    // Initialize cubes
     for(int i = 0; i < SIZE; ++i)
       for(int j = 0; j < SIZE; ++j)
         for(int k = 0; k < SIZE; ++k) cubes[i][j][k] = new Cube(cubeSize);
   }
 
-  ~RubiksCube() {
+  ~RubiksCubeRenderer() {
     for(int i = 0; i < SIZE; ++i)
       for(int j = 0; j < SIZE; ++j)
         for(int k = 0; k < SIZE; ++k) delete cubes[i][j][k];
-  }
-
-  void draw(GLfloat gap, GLint rot_x, GLint rot_y) {
-    for(int i = 0; i < SIZE; ++i)
-      for(int j = 0; j < SIZE; ++j)
-        for(int k = 0; k < SIZE; ++k) cubes[i][j][k]->draw(i, j, k, gap);
-  }
-
-  void applyRotation(int x_0, int x_k, int y_0, int y_k, int z_0, int z_k,
-                     GLfloat angle) {
-    vector<CubeRotation> face[3][3];
-    int index;
-    CubeRotation rotation;
-
-    cout << "Applying rotation with angle: " << angle << endl;
-    cout << "x_0: " << x_0 << ", x_k: " << x_k << ", y_0: " << y_0
-         << ", y_k: " << y_k << ", z_0: " << z_0 << ", z_k: " << z_k << endl;
-
-    for(int i = 0; i < 3; ++i)
-      for(int j = 0; j < 3; ++j) {
-        index = 2 - j % 3;
-        cout << "Processing face at i: " << i << ", j: " << j
-             << ", index: " << index << endl;
-
-        if(x_0 == x_k) {
-          rotation = { angle, 1.0f, 0.0f, 0.0f };
-          face[index][i] = cube_rotations[x_k][i][j];
-          cout << "Rotating around X axis. Adding rotation: (" << rotation.angle
-               << ", " << rotation.x << ", " << rotation.y << ", " << rotation.z
-               << ")" << endl;
-        }
-
-        if(y_0 == y_k) {
-          rotation = { angle, 0.0f, 1.0f, 0.0f };
-          face[index][i] = cube_rotations[j][y_k][i];
-        }
-
-        if(z_0 == z_k) {
-          rotation = { -angle, 0.0f, 0.0f, 1.0f };
-          face[index][i] = cube_rotations[j][i][z_k];
-        }
-
-        face[index][i].push_back(rotation);
-      }
-
-    for(int i = 0; i < 3; ++i)
-      for(int j = 0; j < 3; ++j) {
-        if(x_0 == x_k) {
-          cube_rotations[x_k][i][j] = face[i][j];
-          cout << "Updated cube_rotations for X face at (" << x_k << ", " << i
-               << ", " << j << ")" << endl;
-        }
-        if(y_0 == y_k) cube_rotations[j][y_k][i] = face[i][j];
-        if(z_0 == z_k) cube_rotations[j][i][z_k] = face[i][j];
-      }
-  }
-};
-
-class Camera {
- public:
-  void setCamera() { gluLookAt(0, 80, 200, 0, 0, 0, 0, 1, 0); }
-};
-
-class Renderer {
- public:
-  GLfloat angle, fAspect, cube_size;
-  RubiksCube *rubiksCube;
-  Camera *camera;
-
-  GLint rot_x, rot_y, gap, gap_increment;
-  int x_0, x_k, y_0, y_k, z_0, z_k;
-
-  Renderer() {
-    cube_size = 30.0f;
-    rot_x = rot_y = 0;
-    gap = 5;
-    gap_increment = 3;
-    rubiksCube = new RubiksCube(cube_size);
-    camera = new Camera();
-    angle = 45;
-    resetSelectedFace();
-  }
-
-  ~Renderer() {
-    delete rubiksCube;
     delete camera;
   }
 
@@ -228,22 +158,60 @@ class Renderer {
   void draw() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
-    loadVisualizationParameters();
-    glRotatef(rot_x, 1.0f, 0.0f, 0.0f);
-    glRotatef(rot_y, 0.0f, 1.0f, 0.0f);
-    rubiksCube->draw(gap, rot_x, rot_y);
+    camera->setCamera();
+    glRotatef(rot_x, 1.0, 0.0, 0.0);
+    glRotatef(rot_y, 0.0, 1.0, 0.0);
+
+    // Draw each cube
+    for(int i = 0; i < SIZE; ++i)
+      for(int j = 0; j < SIZE; ++j)
+        for(int k = 0; k < SIZE; ++k) cubes[i][j][k]->draw(i, j, k, gap);
+
     glutSwapBuffers();
   }
 
   void applyRotation(GLfloat angle) {
-    rubiksCube->applyRotation(x_0, x_k, y_0, y_k, z_0, z_k, angle);
-  }
+    vector<CubeRotation> faceRotations;
 
-  void reshape(GLsizei w, GLsizei h) {
-    if(h == 0) h = 1;
-    glViewport(0, 0, w, h);
-    fAspect = (GLfloat)w / (GLfloat)h;
-    loadVisualizationParameters();
+    cout << "Rotating face: " << x_0 << " " << x_k << " " << y_0 << " " << y_k
+         << " " << z_0 << " " << z_k << endl;
+
+    if(x_0 == x_k) {
+      for(int i = 0; i < 3; ++i) {
+        for(int j = 0; j < 3; ++j) {
+          CubeRotation rotation = { angle, 1.0, 0.0, 0.0 }; // Rotate around X
+          cubes[x_k][i][j]->addRotation(rotation);
+        }
+      }
+    } else if(y_0 == y_k) {
+      for(int i = 0; i < 3; ++i) {
+        for(int j = 0; j < 3; ++j) {
+          CubeRotation rotation = { angle, 0.0, 1.0, 0.0 }; // Rotate around Y
+          cubes[j][y_k][i]->addRotation(rotation);
+        }
+      }
+    } else if(z_0 == z_k) {
+      for(int i = 0; i < 3; ++i) {
+        for(int j = 0; j < 3; ++j) {
+          CubeRotation rotation = { -angle, 0.0, 0.0, 1.0 }; // Rotate around Z
+          cubes[j][i][z_k]->addRotation(rotation);
+        }
+      }
+    }
+
+    // Print out cube_rotations for debugging
+    for(int i = 0; i < SIZE; ++i) {
+      for(int j = 0; j < SIZE; ++j) {
+        for(int k = 0; k < SIZE; ++k) {
+          cout << "Cube at (" << i << ", " << j << ", " << k << "): ";
+          for(const auto &rot : cubes[i][j][k]->rotations) {
+            cout << "[" << rot.angle << ", " << rot.x << ", " << rot.y << ", "
+                 << rot.z << "] ";
+          }
+          cout << endl;
+        }
+      }
+    }
   }
 
   void applyKeyboard(unsigned char key, int x, int y) {
@@ -254,8 +222,6 @@ class Renderer {
       case 'J': rot_y = (rot_y + 5) % 360; break;
       case 'I': rot_x = (rot_x + 5) % 360; break;
       case 'K': rot_x = (rot_x - 5) % 360; break;
-
-      // Face selection
       case 'Q': selectFace(0, 0); break;
       case 'W': selectFace(1, 1); break;
       case 'E': selectFace(2, 2); break;
@@ -265,8 +231,6 @@ class Renderer {
       case 'C': selectFace(0, 0, false, true); break;
       case 'X': selectFace(1, 1, false, true); break;
       case 'Z': selectFace(2, 2, false, true); break;
-
-      // Rotation commands
       case 'U': applyRotation(-90); break; // Counter-clockwise
       case 'O': applyRotation(90); break;  // Clockwise
     }
@@ -288,12 +252,15 @@ class Renderer {
   }
 
   void resetSelectedFace() {
-    x_0 = x_k = 0;
-    y_0 = y_k = 0;
-    z_0 = z_k = 0;
+    x_0 = 0;
+    x_k = 2;
+    y_0 = 0;
+    y_k = 2;
+    z_0 = 0;
+    z_k = 2;
   }
 
-  void handleMouse(int button, int state) {
+  void handleMouse(int button, int state, int x, int y) {
     if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
       if(angle >= 10) angle -= 5;
     }
@@ -305,18 +272,23 @@ class Renderer {
   }
 };
 
-Renderer *renderer;
+RubiksCubeRenderer *renderer;
 
 void draw_func() { renderer->draw(); }
 
-void reshape_func(GLsizei w, GLsizei h) { renderer->reshape(w, h); }
+void reshape_func(GLsizei w, GLsizei h) {
+  if(h == 0) h = 1;
+  glViewport(0, 0, w, h);
+  renderer->fAspect = (GLfloat)w / (GLfloat)h;
+  renderer->loadVisualizationParameters();
+}
 
 void keyboard_func(unsigned char key, int x, int y) {
   renderer->applyKeyboard(key, x, y);
 }
 
 void mouse_func(int button, int state, int x, int y) {
-  renderer->handleMouse(button, state);
+  renderer->handleMouse(button, state, x, y);
 }
 
 int main(int argc, char **argv) {
@@ -324,7 +296,7 @@ int main(int argc, char **argv) {
   glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
   glutInitWindowSize(800, 600);
   glutCreateWindow("Rubik's Cube 3D Visualization");
-  renderer = new Renderer();
+  renderer = new RubiksCubeRenderer(30.0f);
   renderer->initGL();
   glutDisplayFunc(draw_func);
   glutReshapeFunc(reshape_func);
