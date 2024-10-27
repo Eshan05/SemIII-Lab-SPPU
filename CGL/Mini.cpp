@@ -7,17 +7,19 @@
 
 #include <GL/gl.h>
 #include <GL/glut.h>
+#include <iostream>
 #include <vector>
+
 using namespace std;
 
-struct cube_rotate {
+struct CubeRotation {
   GLfloat angle, x, y, z;
 };
 
 class Cube {
  public:
   GLfloat size;
-  vector<cube_rotate> rotations;
+  vector<CubeRotation> rotations;
 
   Cube(GLfloat size) : size(size) {}
 
@@ -25,72 +27,65 @@ class Cube {
     glPushMatrix();
     glTranslatef((x - 1) * size + x * gap, (y - 1) * size + y * gap,
                  (z - 1) * size + z * gap);
-
-    for(int i = rotations.size() - 1; i >= 0; --i)
-      glRotatef(rotations[i].angle, rotations[i].x, rotations[i].y,
-                rotations[i].z);
-
+    for(const auto &rotation : rotations) {
+      glRotatef(rotation.angle, rotation.x, rotation.y, rotation.z);
+    }
     drawFaces();
     glPopMatrix();
   }
 
-  void addRotation(cube_rotate rotation) { rotations.push_back(rotation); }
+  void addRotation(const CubeRotation &rotation) {
+    rotations.push_back(rotation);
+  }
 
  private:
   void drawFaces() {
-    glColor3f(1.0f, 0.0f, 0.0f); // Front
-    glBegin(GL_QUADS);
-    glNormal3f(0.0, 0.0, 1.0);
-    glVertex3f(size / 2, size / 2, size / 2);
-    glVertex3f(-size / 2, size / 2, size / 2);
-    glVertex3f(-size / 2, -size / 2, size / 2);
-    glVertex3f(size / 2, -size / 2, size / 2);
-    glEnd();
+    // Define colors for each face of the cube
+    GLfloat colors[6][3] = {
+      { 1.0f, 0.0f, 0.0f }, // Front
+      { 1.0f, 0.5f, 0.0f }, // Back
+      { 0.0f, 0.0f, 1.0f }, // Left
+      { 0.0f, 1.0f, 0.0f }, // Right
+      { 1.0f, 1.0f, 0.0f }, // Top
+      { 1.0f, 1.0f, 1.0f }  // Bottom
+    };
 
-    glColor3f(1.0f, 0.5f, 0.0f); // Back
-    glBegin(GL_QUADS);
-    glNormal3f(0.0, 0.0, -1.0);
-    glVertex3f(size / 2, size / 2, -size / 2);
-    glVertex3f(size / 2, -size / 2, -size / 2);
-    glVertex3f(-size / 2, -size / 2, -size / 2);
-    glVertex3f(-size / 2, size / 2, -size / 2);
-    glEnd();
+    // Draw the six faces of the cube
+    const GLfloat vertices[6][4][3] = {
+      { { size / 2, size / 2, size / 2 },
+        { -size / 2, size / 2, size / 2 },
+        { -size / 2, -size / 2, size / 2 },
+        { size / 2, -size / 2, size / 2 } }, // Front
+      { { size / 2, size / 2, -size / 2 },
+        { size / 2, -size / 2, -size / 2 },
+        { -size / 2, -size / 2, -size / 2 },
+        { -size / 2, size / 2, -size / 2 } }, // Back
+      { { -size / 2, size / 2, size / 2 },
+        { -size / 2, size / 2, -size / 2 },
+        { -size / 2, -size / 2, -size / 2 },
+        { -size / 2, -size / 2, size / 2 } }, // Left
+      { { size / 2, size / 2, size / 2 },
+        { size / 2, -size / 2, size / 2 },
+        { size / 2, -size / 2, -size / 2 },
+        { size / 2, size / 2, -size / 2 } }, // Right
+      { { -size / 2, size / 2, -size / 2 },
+        { -size / 2, size / 2, size / 2 },
+        { size / 2, size / 2, size / 2 },
+        { size / 2, size / 2, -size / 2 } }, // Top
+      { { -size / 2, -size / 2, -size / 2 },
+        { size / 2, -size / 2, -size / 2 },
+        { size / 2, -size / 2, size / 2 },
+        { -size / 2, -size / 2, size / 2 } } // Bottom
+    };
 
-    glColor3f(0.0f, 0.0f, 1.0f); // Left
-    glBegin(GL_QUADS);
-    glNormal3f(-1.0, 0.0, 0.0);
-    glVertex3f(-size / 2, size / 2, size / 2);
-    glVertex3f(-size / 2, size / 2, -size / 2);
-    glVertex3f(-size / 2, -size / 2, -size / 2);
-    glVertex3f(-size / 2, -size / 2, size / 2);
-    glEnd();
-
-    glColor3f(0.0f, 1.0f, 0.0f); // Right
-    glBegin(GL_QUADS);
-    glNormal3f(1.0, 0.0, 0.0);
-    glVertex3f(size / 2, size / 2, size / 2);
-    glVertex3f(size / 2, -size / 2, size / 2);
-    glVertex3f(size / 2, -size / 2, -size / 2);
-    glVertex3f(size / 2, size / 2, -size / 2);
-    glEnd();
-
-    glColor3f(1.0f, 1.0f, 0.0f); // Top
-    glBegin(GL_QUADS);
-    glNormal3f(0.0, 1.0, 0.0);
-    glVertex3f(-size / 2, size / 2, -size / 2);
-    glVertex3f(-size / 2, size / 2, size / 2);
-    glVertex3f(size / 2, size / 2, size / 2);
-    glVertex3f(size / 2, size / 2, -size / 2);
-    glEnd();
-
-    glColor3f(1.0f, 1.0f, 1.0f); // Bottom
-    glBegin(GL_QUADS);
-    glNormal3f(0.0, -1.0, 0.0);
-    glVertex3f(-size / 2, -size / 2, -size / 2);
-    glVertex3f(size / 2, -size / 2, -size / 2);
-    glVertex3f(size / 2, -size / 2, size / 2);
-    glVertex3f(-size / 2, -size / 2, size / 2);
-    glEnd();
+    for(int i = 0; i < 6; i++) {
+      glColor3f(colors[i][0], colors[i][1], colors[i][2]);
+      glBegin(GL_QUADS);
+      for(int j = 0; j < 4; j++) {
+        glVertex3f(vertices[i][j][0], vertices[i][j][1], vertices[i][j][2]);
+      }
+      glEnd();
+    }
   }
 };
 
@@ -98,7 +93,7 @@ class RubiksCube {
  public:
   static const int SIZE = 3;
   Cube *cubes[SIZE][SIZE][SIZE];
-  vector<cube_rotate> cube_rotations[SIZE][SIZE][SIZE];
+  vector<CubeRotation> cube_rotations[SIZE][SIZE][SIZE];
 
   RubiksCube(GLfloat cubeSize) {
     for(int i = 0; i < SIZE; ++i)
@@ -115,30 +110,40 @@ class RubiksCube {
   void draw(GLfloat gap, GLint rot_x, GLint rot_y) {
     for(int i = 0; i < SIZE; ++i)
       for(int j = 0; j < SIZE; ++j)
-        for(int k = 0; k < SIZE; ++k) { cubes[i][j][k]->draw(i, j, k, gap); }
+        for(int k = 0; k < SIZE; ++k) cubes[i][j][k]->draw(i, j, k, gap);
   }
 
   void applyRotation(int x_0, int x_k, int y_0, int y_k, int z_0, int z_k,
                      GLfloat angle) {
-    vector<cube_rotate> face[3][3];
+    vector<CubeRotation> face[3][3];
     int index;
-    cube_rotate rotation;
+    CubeRotation rotation;
+
+    cout << "Applying rotation with angle: " << angle << endl;
+    cout << "x_0: " << x_0 << ", x_k: " << x_k << ", y_0: " << y_0
+         << ", y_k: " << y_k << ", z_0: " << z_0 << ", z_k: " << z_k << endl;
 
     for(int i = 0; i < 3; ++i)
       for(int j = 0; j < 3; ++j) {
         index = 2 - j % 3;
+        cout << "Processing face at i: " << i << ", j: " << j
+             << ", index: " << index << endl;
+
         if(x_0 == x_k) {
-          rotation = { angle, 1.0, 0.0, 0.0 };
+          rotation = { angle, 1.0f, 0.0f, 0.0f };
           face[index][i] = cube_rotations[x_k][i][j];
+          cout << "Rotating around X axis. Adding rotation: (" << rotation.angle
+               << ", " << rotation.x << ", " << rotation.y << ", " << rotation.z
+               << ")" << endl;
         }
 
         if(y_0 == y_k) {
-          rotation = { angle, 0.0, 1.0, 0.0 };
+          rotation = { angle, 0.0f, 1.0f, 0.0f };
           face[index][i] = cube_rotations[j][y_k][i];
         }
 
         if(z_0 == z_k) {
-          rotation = { -1 * angle, 0.0, 0.0, 1.0 };
+          rotation = { -angle, 0.0f, 0.0f, 1.0f };
           face[index][i] = cube_rotations[j][i][z_k];
         }
 
@@ -147,20 +152,14 @@ class RubiksCube {
 
     for(int i = 0; i < 3; ++i)
       for(int j = 0; j < 3; ++j) {
-        if(x_0 == x_k) cube_rotations[x_k][i][j] = face[i][j];
+        if(x_0 == x_k) {
+          cube_rotations[x_k][i][j] = face[i][j];
+          cout << "Updated cube_rotations for X face at (" << x_k << ", " << i
+               << ", " << j << ")" << endl;
+        }
         if(y_0 == y_k) cube_rotations[j][y_k][i] = face[i][j];
         if(z_0 == z_k) cube_rotations[j][i][z_k] = face[i][j];
       }
-  }
-
-  void resetSelectedFace(GLint &x_0, GLint &x_k, GLint &y_0, GLint &y_k,
-                         GLint &z_0, GLint &z_k) {
-    x_0 = 0;
-    x_k = 2;
-    y_0 = 0;
-    y_k = 2;
-    z_0 = 0;
-    z_k = 2;
   }
 };
 
@@ -172,20 +171,21 @@ class Camera {
 class Renderer {
  public:
   GLfloat angle, fAspect, cube_size;
-  GLint rot_x, rot_y, crement, gap, gap_crement;
   RubiksCube *rubiksCube;
   Camera *camera;
 
+  GLint rot_x, rot_y, gap, gap_increment;
+  int x_0, x_k, y_0, y_k, z_0, z_k;
+
   Renderer() {
-    cube_size = 30.0;
-    rot_x = 0;
-    rot_y = 0;
-    crement = 5;
+    cube_size = 30.0f;
+    rot_x = rot_y = 0;
     gap = 5;
-    gap_crement = 3;
+    gap_increment = 3;
     rubiksCube = new RubiksCube(cube_size);
     camera = new Camera();
     angle = 45;
+    resetSelectedFace();
   }
 
   ~Renderer() {
@@ -194,17 +194,16 @@ class Renderer {
   }
 
   void initGL() {
-    GLfloat ambient_light[4] = { 0.2, 0.2, 0.2, 1.0 };
-    GLfloat diffuse_light[4] = { 0.7, 0.7, 0.7, 1.0 };
-    GLfloat specular_light[4] = { 1.0, 1.0, 1.0, 1.0 };
-    GLfloat light_position[4] = { 0.0, 50.0, 50.0, 1.0 };
-    GLfloat specularity[4] = { 1.0, 1.0, 1.0, 1.0 };
-    GLint material_specularity = 60;
+    GLfloat ambient_light[] = { 0.2f, 0.2f, 0.2f, 1.0f };
+    GLfloat diffuse_light[] = { 0.7f, 0.7f, 0.7f, 1.0f };
+    GLfloat specular_light[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+    GLfloat light_position[] = { 0.0f, 50.0f, 50.0f, 1.0f };
+    GLfloat specularity[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glShadeModel(GL_SMOOTH);
     glMaterialfv(GL_FRONT, GL_SPECULAR, specularity);
-    glMateriali(GL_FRONT, GL_SHININESS, material_specularity);
+    glMateriali(GL_FRONT, GL_SHININESS, 60);
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambient_light);
     glLightfv(GL_LIGHT0, GL_AMBIENT, ambient_light);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse_light);
@@ -229,10 +228,14 @@ class Renderer {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
     loadVisualizationParameters();
-    glRotatef(rot_x, 1.0, 0.0, 0.0);
-    glRotatef(rot_y, 0.0, 1.0, 0.0);
+    glRotatef(rot_x, 1.0f, 0.0f, 0.0f);
+    glRotatef(rot_y, 0.0f, 1.0f, 0.0f);
     rubiksCube->draw(gap, rot_x, rot_y);
     glutSwapBuffers();
+  }
+
+  void applyRotation(GLfloat angle) {
+    rubiksCube->applyRotation(x_0, x_k, y_0, y_k, z_0, z_k, angle);
   }
 
   void reshape(GLsizei w, GLsizei h) {
@@ -244,92 +247,51 @@ class Renderer {
 
   void applyKeyboard(unsigned char key, int x, int y) {
     switch(key) {
-      case '+': gap += gap_crement; break;
-      case '-': gap -= gap_crement; break;
-      case 'L': rot_y = (rot_y - crement) % 360; break;
-      case 'J': rot_y = (rot_y + crement) % 360; break;
-      case 'I': rot_x = (rot_x + crement) % 360; break;
-      case 'K':
-        rot_x = (rot_x - crement) % 360;
-        break;
-        // Cube movements
-        handleCubeMovement(key);
-      default: break;
+      case '+': gap += gap_increment; break;
+      case '-': gap -= gap_increment; break;
+      case 'L': rot_y = (rot_y - 5) % 360; break;
+      case 'J': rot_y = (rot_y + 5) % 360; break;
+      case 'I': rot_x = (rot_x + 5) % 360; break;
+      case 'K': rot_x = (rot_x - 5) % 360; break;
+
+      // Face selection
+      case 'Q': selectFace(0, 0); break;
+      case 'W': selectFace(1, 1); break;
+      case 'E': selectFace(2, 2); break;
+      case 'A': selectFace(0, 0, true); break;
+      case 'S': selectFace(1, 1, true); break;
+      case 'D': selectFace(2, 2, true); break;
+      case 'C': selectFace(0, 0, false, true); break;
+      case 'X': selectFace(1, 1, false, true); break;
+      case 'Z': selectFace(2, 2, false, true); break;
+
+      // Rotation commands
+      case 'U': applyRotation(-90); break; // Counter-clockwise
+      case 'O': applyRotation(90); break;  // Clockwise
     }
     glutPostRedisplay();
   }
 
-  void handleCubeMovement(unsigned char key) {
-    static GLint x_0, x_k, y_0, y_k, z_0, z_k;
-
-    // Reset face selection
-    rubiksCube->resetSelectedFace(x_0, x_k, y_0, y_k, z_0, z_k);
-
-    switch(key) {
-      // X-axis faces
-      case 'Q':
-      case 'q':
-        x_0 = 0;
-        x_k = 0;
-        break;
-      case 'W':
-      case 'w':
-        x_0 = 1;
-        x_k = 1;
-        break;
-      case 'E':
-      case 'e':
-        x_0 = 2;
-        x_k = 2;
-        break;
-
-      // Y-axis faces
-      case 'A':
-      case 'a':
-        y_0 = 0;
-        y_k = 0;
-        break;
-      case 'S':
-      case 's':
-        y_0 = 1;
-        y_k = 1;
-        break;
-      case 'D':
-      case 'd':
-        y_0 = 2;
-        y_k = 2;
-        break;
-
-      // Z-axis faces
-      case 'C':
-      case 'c':
-        z_0 = 0;
-        z_k = 0;
-        break;
-      case 'X':
-      case 'x':
-        z_0 = 1;
-        z_k = 1;
-        break;
-      case 'Z':
-      case 'z':
-        z_0 = 2;
-        z_k = 2;
-        break;
-
-      // Move selected face
-      case 'U': // CC
-      case 'u':
-        rubiksCube->applyRotation(x_0, x_k, y_0, y_k, z_0, z_k, -90);
-        break;
-      case 'O': // Clockwise
-      case 'o':
-        rubiksCube->applyRotation(x_0, x_k, y_0, y_k, z_0, z_k, 90);
-        break;
-
-      default: break;
+  void selectFace(int face, int index, bool isY = false, bool isZ = false) {
+    resetSelectedFace();
+    if(isY) {
+      y_0 = y_k = index;
+      cout << "Selected Y face at index: " << index << endl;
+    } else if(isZ) {
+      z_0 = z_k = index;
+      cout << "Selected Z face at index: " << index << endl;
+    } else {
+      x_0 = x_k = index;
+      cout << "Selected X face at index: " << index << endl;
     }
   }
+
+  void resetSelectedFace() {
+    x_0 = x_k = 0;
+    y_0 = y_k = 0;
+    z_0 = z_k = 0;
+  }
+
   void handleMouse(int button, int state) {
     if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
       if(angle >= 10) angle -= 5;
@@ -359,8 +321,8 @@ void mouse_func(int button, int state, int x, int y) {
 int main(int argc, char **argv) {
   glutInit(&argc, argv);
   glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-  glutInitWindowSize(400, 350);
-  glutCreateWindow("Visualizacao 3D");
+  glutInitWindowSize(800, 600);
+  glutCreateWindow("Rubik's Cube 3D Visualization");
   renderer = new Renderer();
   renderer->initGL();
   glutDisplayFunc(draw_func);
