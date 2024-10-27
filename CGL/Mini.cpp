@@ -26,7 +26,6 @@ class Cube {
     glTranslatef((x - 1) * size + x * gap, (y - 1) * size + y * gap,
                  (z - 1) * size + z * gap);
 
-    // Apply rotations in reverse order to achieve correct visual output
     for(auto it = rotations.rbegin(); it != rotations.rend(); ++it) {
       glRotatef(it->angle, it->x, it->y, it->z);
     }
@@ -41,41 +40,35 @@ class Cube {
 
  private:
   void drawFaces() {
-    GLfloat colors[6][3] = {
-      { 1.0f, 0.0f, 0.0f }, // Front
-      { 1.0f, 0.5f, 0.0f }, // Back
-      { 0.0f, 0.0f, 1.0f }, // Left
-      { 0.0f, 1.0f, 0.0f }, // Right
-      { 1.0f, 1.0f, 0.0f }, // Top
-      { 1.0f, 1.0f, 1.0f }  // Bottom
-    };
+    GLfloat colors[6][3] = { { 1.0f, 0.0f, 0.0f }, { 1.0f, 0.5f, 0.0f },
+                             { 0.0f, 0.0f, 1.0f }, { 0.0f, 1.0f, 0.0f },
+                             { 1.0f, 1.0f, 0.0f }, { 1.0f, 1.0f, 1.0f } };
 
-    const GLfloat vertices[6][4][3] = {
-      { { size / 2, size / 2, size / 2 },
-        { -size / 2, size / 2, size / 2 },
-        { -size / 2, -size / 2, size / 2 },
-        { size / 2, -size / 2, size / 2 } }, // Front
-      { { size / 2, size / 2, -size / 2 },
-        { size / 2, -size / 2, -size / 2 },
-        { -size / 2, -size / 2, -size / 2 },
-        { -size / 2, size / 2, -size / 2 } }, // Back
-      { { -size / 2, size / 2, size / 2 },
-        { -size / 2, size / 2, -size / 2 },
-        { -size / 2, -size / 2, -size / 2 },
-        { -size / 2, -size / 2, size / 2 } }, // Left
-      { { size / 2, size / 2, size / 2 },
-        { size / 2, -size / 2, size / 2 },
-        { size / 2, -size / 2, -size / 2 },
-        { size / 2, size / 2, -size / 2 } }, // Right
-      { { -size / 2, size / 2, -size / 2 },
-        { -size / 2, size / 2, size / 2 },
-        { size / 2, size / 2, size / 2 },
-        { size / 2, size / 2, -size / 2 } }, // Top
-      { { -size / 2, -size / 2, -size / 2 },
-        { size / 2, -size / 2, -size / 2 },
-        { size / 2, -size / 2, size / 2 },
-        { -size / 2, -size / 2, size / 2 } } // Bottom
-    };
+    const GLfloat vertices[6][4][3] = { { { size / 2, size / 2, size / 2 },
+                                          { -size / 2, size / 2, size / 2 },
+                                          { -size / 2, -size / 2, size / 2 },
+                                          { size / 2, -size / 2, size / 2 } },
+                                        { { size / 2, size / 2, -size / 2 },
+                                          { size / 2, -size / 2, -size / 2 },
+                                          { -size / 2, -size / 2, -size / 2 },
+                                          { -size / 2, size / 2, -size / 2 } },
+                                        { { -size / 2, size / 2, size / 2 },
+                                          { -size / 2, size / 2, -size / 2 },
+                                          { -size / 2, -size / 2, -size / 2 },
+                                          { -size / 2, -size / 2, size / 2 } },
+                                        { { size / 2, size / 2, size / 2 },
+                                          { size / 2, -size / 2, size / 2 },
+                                          { size / 2, -size / 2, -size / 2 },
+                                          { size / 2, size / 2, -size / 2 } },
+                                        { { -size / 2, size / 2, -size / 2 },
+                                          { -size / 2, size / 2, size / 2 },
+                                          { size / 2, size / 2, size / 2 },
+                                          { size / 2, size / 2, -size / 2 } },
+                                        { { -size / 2, -size / 2, -size / 2 },
+                                          { size / 2, -size / 2, -size / 2 },
+                                          { size / 2, -size / 2, size / 2 },
+                                          { -size / 2, -size / 2,
+                                            size / 2 } } };
 
     for(int i = 0; i < 6; i++) {
       glColor3f(colors[i][0], colors[i][1], colors[i][2]);
@@ -87,6 +80,11 @@ class Cube {
     }
   }
 };
+
+void RBS(float x, float y, void *f, const char *s) {
+  glRasterPos2f(x, y);
+  for(const char *c = s; *c != '\0'; c++) { glutBitmapCharacter(f, *c); }
+}
 
 class RubiksCubeRenderer {
  public:
@@ -111,7 +109,6 @@ class RubiksCubeRenderer {
     angle = 45;
     resetSelectedFace();
 
-    // Initialize cubes
     for(int i = 0; i < SIZE; ++i)
       for(int j = 0; j < SIZE; ++j)
         for(int k = 0; k < SIZE; ++k) cubes[i][j][k] = new Cube(cubeSize);
@@ -162,53 +159,39 @@ class RubiksCubeRenderer {
     glRotatef(rot_x, 1.0, 0.0, 0.0);
     glRotatef(rot_y, 0.0, 1.0, 0.0);
 
-    // Draw each cube
     for(int i = 0; i < SIZE; ++i)
       for(int j = 0; j < SIZE; ++j)
         for(int k = 0; k < SIZE; ++k) cubes[i][j][k]->draw(i, j, k, gap);
+
+    const char *hex = "\x45\x73\x68\x61\x6e\x20\x4e\x61\x68\x61\x72";
+    float xPos = (800 - 99) / 2.0f;
+    float yPos = 250.0f;
+    glColor4f(1.0f, 1.0f, 1.0f, 0.3f);
+    RBS(xPos, yPos, GLUT_BITMAP_HELVETICA_12, hex);
 
     glutSwapBuffers();
   }
 
   void applyRotation(GLfloat angle) {
-    vector<CubeRotation> faceRotations;
-
-    cout << "Rotating face: " << x_0 << " " << x_k << " " << y_0 << " " << y_k
-         << " " << z_0 << " " << z_k << endl;
-
     if(x_0 == x_k) {
       for(int i = 0; i < 3; ++i) {
         for(int j = 0; j < 3; ++j) {
-          CubeRotation rotation = { angle, 1.0, 0.0, 0.0 }; // Rotate around X
+          CubeRotation rotation = { angle, 1.0, 0.0, 0.0 };
           cubes[x_k][i][j]->addRotation(rotation);
         }
       }
     } else if(y_0 == y_k) {
       for(int i = 0; i < 3; ++i) {
         for(int j = 0; j < 3; ++j) {
-          CubeRotation rotation = { angle, 0.0, 1.0, 0.0 }; // Rotate around Y
+          CubeRotation rotation = { angle, 0.0, 1.0, 0.0 };
           cubes[j][y_k][i]->addRotation(rotation);
         }
       }
     } else if(z_0 == z_k) {
       for(int i = 0; i < 3; ++i) {
         for(int j = 0; j < 3; ++j) {
-          CubeRotation rotation = { -angle, 0.0, 0.0, 1.0 }; // Rotate around Z
+          CubeRotation rotation = { -angle, 0.0, 0.0, 1.0 };
           cubes[j][i][z_k]->addRotation(rotation);
-        }
-      }
-    }
-
-    // Print out cube_rotations for debugging
-    for(int i = 0; i < SIZE; ++i) {
-      for(int j = 0; j < SIZE; ++j) {
-        for(int k = 0; k < SIZE; ++k) {
-          cout << "Cube at (" << i << ", " << j << ", " << k << "): ";
-          for(const auto &rot : cubes[i][j][k]->rotations) {
-            cout << "[" << rot.angle << ", " << rot.x << ", " << rot.y << ", "
-                 << rot.z << "] ";
-          }
-          cout << endl;
         }
       }
     }
@@ -231,8 +214,8 @@ class RubiksCubeRenderer {
       case 'C': selectFace(0, 0, false, true); break;
       case 'X': selectFace(1, 1, false, true); break;
       case 'Z': selectFace(2, 2, false, true); break;
-      case 'U': applyRotation(-90); break; // Counter-clockwise
-      case 'O': applyRotation(90); break;  // Clockwise
+      case 'U': applyRotation(-90); break;
+      case 'O': applyRotation(90); break;
     }
     glutPostRedisplay();
   }
@@ -241,13 +224,10 @@ class RubiksCubeRenderer {
     resetSelectedFace();
     if(isY) {
       y_0 = y_k = index;
-      cout << "Selected Y face at index: " << index << endl;
     } else if(isZ) {
       z_0 = z_k = index;
-      cout << "Selected Z face at index: " << index << endl;
     } else {
       x_0 = x_k = index;
-      cout << "Selected X face at index: " << index << endl;
     }
   }
 
