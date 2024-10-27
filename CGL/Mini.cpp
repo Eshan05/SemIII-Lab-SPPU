@@ -16,6 +16,7 @@ struct CubeRotation {
   GLfloat angle, x, y, z;
 };
 
+vector<CubeRotation> cube_rotations[3][3][3];
 class Cube {
  public:
   GLfloat size;
@@ -93,7 +94,7 @@ class RubiksCube {
  public:
   static const int SIZE = 3;
   Cube *cubes[SIZE][SIZE][SIZE];
-  vector<CubeRotation> cube_rotations[SIZE][SIZE][SIZE];
+  // vector<CubeRotation> cube_rotations[SIZE][SIZE][SIZE];
 
   RubiksCube(GLfloat cubeSize) {
     for(int i = 0; i < SIZE; ++i)
