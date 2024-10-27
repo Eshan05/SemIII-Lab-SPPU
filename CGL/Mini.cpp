@@ -201,21 +201,25 @@ class RubiksCubeRenderer {
     switch(key) {
       case '+': gap += gap_increment; break;
       case '-': gap -= gap_increment; break;
-      case 'L': rot_y = (rot_y - 5) % 360; break;
-      case 'J': rot_y = (rot_y + 5) % 360; break;
-      case 'I': rot_x = (rot_x + 5) % 360; break;
-      case 'K': rot_x = (rot_x - 5) % 360; break;
-      case 'Q': selectFace(0, 0); break;
-      case 'W': selectFace(1, 1); break;
-      case 'E': selectFace(2, 2); break;
-      case 'A': selectFace(0, 0, true); break;
-      case 'S': selectFace(1, 1, true); break;
-      case 'D': selectFace(2, 2, true); break;
-      case 'C': selectFace(0, 0, false, true); break;
-      case 'X': selectFace(1, 1, false, true); break;
-      case 'Z': selectFace(2, 2, false, true); break;
-      case 'U': applyRotation(-90); break;
-      case 'O': applyRotation(90); break;
+      case 'L':
+      case 'l': rot_y = (rot_y - 5) % 360; break;
+      case 'J':
+      case 'j': rot_y = (rot_y + 5) % 360; break;
+      case 'I':
+      case 'i': rot_x = (rot_x + 5) % 360; break;
+      case 'K':
+      case 'k': rot_x = (rot_x - 5) % 360; break;
+      case 'q': selectFace(0, 0); break;
+      case 'w': selectFace(1, 1); break;
+      case 'e': selectFace(2, 2); break;
+      case 'a': selectFace(0, 0, true); break;
+      case 's': selectFace(1, 1, true); break;
+      case 'd': selectFace(2, 2, true); break;
+      case 'c': selectFace(0, 0, false, true); break;
+      case 'x': selectFace(1, 1, false, true); break;
+      case 'z': selectFace(2, 2, false, true); break;
+      case 'u': applyRotation(-90); break;
+      case 'o': applyRotation(90); break;
     }
     glutPostRedisplay();
   }
