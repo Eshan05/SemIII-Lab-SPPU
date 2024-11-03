@@ -6,24 +6,25 @@
  */
 
 #include <GL/freeglut.h>
+#include <algorithm>
+using namespace std;
 
 float tx = 0.0, ty = 0.0, tz = -10.0; // Translation parameters
 float angleX = 0.0;                   // X-axis rotation angle
 float angleY = -45.0;                 // Rotation angle
 float angleZ = 0.0;                   // Z-axis rotation angle
+float sx = 1.0, sy = 1.0, sz = 1.0;   // Scaling factors
 
 void mydisplay() {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glLoadIdentity(); // Reset modelview matrix
 
+  // Apply transformations
   glTranslatef(tx, ty, tz);
+  glScalef(sx, sy, sz);             // Apply scaling
   glRotatef(angleX, 1.0, 0.0, 0.0); // Rotate around X-axis
   glRotatef(angleY, 0.0, 1.0, 0.0); // Rotate around Y-axis
   glRotatef(angleZ, 0.0, 0.0, 1.0); // Rotate around Z-axis
-  // glTranslatef(0.0, 0.0, -10.0);
-  // // glScalef(2.0,2.0,0.0);
-  // // glRotatef(20.0,1.0,0.0,0.0);
-  // glRotatef(-45.0, 0.0, 1.0, 0.0);
 
   glBegin(GL_QUADS);
   // front (red)
@@ -85,7 +86,17 @@ void keyboard(unsigned char key, int x, int y) {
     case 'f': angleX -= 5.0; break; // Rotate X backward
     case 't': angleZ += 5.0; break; // Rotate Z clockwise
     case 'g': angleZ -= 5.0; break; // Rotate Z counterclockwise
-    case 27: exit(0); break;        // ESC key to exit
+    case 'z':
+      sx += 0.1;
+      sy += 0.1;
+      sz += 0.1;
+      break;
+    case 'x':
+      sx = std::max(0.1f, sx - 0.1f);
+      sy = std::max(0.1f, sy - 0.1f);
+      sz = std::max(0.1f, sz - 0.1f);
+      break;                 // Scale down
+    case 27: exit(0); break; // ESC key to exit
   }
   glutPostRedisplay(); // Redraw the scene
 }
@@ -100,7 +111,6 @@ void reshape(int w, int h) {
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity(); // Resets projection matrix
   gluPerspective(60, 1, 2.0, 50.0);
-  // glOrtho(-5,5,-5,5,-5,5);
   glMatrixMode(GL_MODELVIEW);
 }
 
