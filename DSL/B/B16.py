@@ -16,7 +16,9 @@ def printperc(perc):
 
 def parititon(perc, start, end):
 	if not perc or start < 0 or end >= len(perc):
-		raise IndexError("Invalid index for partitioning")
+		# raise IndexError("Invalid index for partitioning")
+		print("Invalid index for partitioning")
+		return -1
 	pivot = perc[start]
 	lower = start + 1
 	upper = end

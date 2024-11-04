@@ -33,7 +33,11 @@ def bucket_sort(arr):
 	max_value = max(arr) 
 	bucket_count = 10 # Number of buckets
 	bucket_range = (max_value - min_value) / bucket_count
-	buckets = [[] for _ in range(bucket_count)]
+	# buckets = [[] for _ in range(bucket_count)]
+
+	buckets = []
+	for i in range(bucket_count):
+		buckets.append([])
 	
 	for num in arr:
 		index = int((num - min_value) / bucket_range)

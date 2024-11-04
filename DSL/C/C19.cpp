@@ -1,284 +1,269 @@
 // * Eshan Nahar
-// 19. Department of Computer Engineering has student's club named 'Pinnacle Club'. Students of second, third and final year of department can be granted membership on request. Similarly one may cancel the membership of club. First node is reserved for president of club and last node is reserved for secretary of club. WCP to maintain club member‘s information using singly linked list. Store student PRN and Name. Write functions to:
-    
-//   a) Add and delete the members as well as president or even secretary. 
-//   b) Compute total number of members of club 
-//   c) Display members 
+// 19. Department of Computer Engineering has student's club named 'Pinnacle
+// Club'. Students of second, third and final year of department can be granted
+// membership on request. Similarly one may cancel the membership of club. First
+// node is reserved for president of club and last node is reserved for
+// secretary of club. WCP to maintain club member‘s information using singly
+// linked list. Store student PRN and Name. Write functions to:
+
+//   a) Add and delete the members as well as president or even secretary.
+//   b) Compute total number of members of club
+//   c) Display members
 //   d) Two linked lists exists for two divisions. Concatenate two lists.
 
-#include <bits/stdc++.h>
+#include <iostream>
+#include <string>
 using namespace std;
 
-class node {
-	private:
-		string name;
-		long prn;
-		node *next;
-	public:
-		node() {
-			prn = 0;
-			next = NULL;
-		}
-		friend class List;
+enum Role { PRESIDENT, SECRETARY, MEMBER };
+// Node structure definition
+struct node {
+  string name;
+  int PRN;
+  Role role;
+  node *next;
+  node(string nm, int prn, Role r)
+      : name(nm), PRN(prn), role(r), next(nullptr) {}
 };
 
-class List {
-	private:
-		node* head;
-		int count;
-	public:
-		List() {
-			head = NULL;
-			count = 0;
-		}
-		node *create(int v, string n);
-		void insertEnd();
-		void insertStart();
-		void deleteStart();
-		void deleteEnd();
-		void deleteAt(int i);
-		void insertAt(int i);
-		void display();
-		int countAll();
-		void reverse();
-		node* rev(node *t);
-		node* readAt(int i);
-		void concatenate(List& A, List& B);
-		void op();
+// Linked list class definition
+class ll {
+  node *head;
+  node *tail;
+
+ public:
+  ll() : head(nullptr), tail(nullptr) {}
+  ~ll() {
+    while(head) { removePresident(); }
+  }
+
+  void create();
+  void display();
+  void addPresident();
+  void addSecretary();
+  void addMember();
+  void removePresident();
+  void deleteSecretary();
+  void deleteMember(int prn);
+  int computeTotal();
+  void concatLists(ll &other);
+
+ private:
+  bool isValidPRN(int prn);
+  node *createNode(Role role);
 };
 
-node* List::create(int v, string n) {
-	node* temp = new node;
-	if(temp == NULL) {
-		cout << "Memory not allocated" << endl;
-		exit(0);
-	} else {
-	temp->name = n;
-	temp->prn = v;
-	temp->next = NULL;
-	return temp; 
-	}
+bool ll::isValidPRN(int prn) { return prn > 0; }
+
+node *ll::createNode(Role role) {
+  string name;
+  int prn;
+
+  cout << "Enter PRN number for "
+       << ((role == PRESIDENT)   ? "President"
+           : (role == SECRETARY) ? "Secretary"
+                                 : "Member")
+       << ": ";
+  try {
+    cin >> prn;
+    if(!isValidPRN(prn)) throw prn;
+  } catch(int prn) {
+    cout << "Invalid PRN number: " << prn << endl;
+    return nullptr;
+  }
+  cout << "Enter name: ";
+  cin >> name;
+
+  return new node(name, prn, role);
 }
 
-void List::insertEnd() { // Secretary
-	int v; string n;
-	cout << "Enter PRN: "; cin >> v;
-	cout << "Enter Name: "; cin.ignore(); getline(cin, n);
-	node* newNode = create(v, n);
-	if(head == NULL) head = newNode;
-	else {
-		node* temp = head;
-		while(temp->next != NULL) temp = temp->next;
-		temp->next = newNode;
-	}
-	count++;
+void ll::create() {
+  head = createNode(PRESIDENT);
+  tail = head;
+  cout << "List created with President: " << head->name << endl;
 }
 
-void List::insertStart() {
-	int v; string n;
-	cout << "Enter PRN: "; cin >> v;
-	cout << "Enter Name: "; cin.ignore(); getline(cin, n);
-	node* newNode = create(v, n);
-	newNode->next = head;
-	head = newNode;
-	count++;
-}
-
-void List::insertAt(int pos) {
-	if(pos < 0 || pos > count) {
-		cout << "Invalid Position" << endl;
-		return;
-	}
-
-	int v; string n;
-	cout << "Enter PRN: "; cin >> v;
-	cout << "Enter Name: "; cin.ignore(); getline(cin, n);
-	node* newNode = create(v, n);
-	if(pos == 0) {
-		newNode->next = head;
-		head = newNode;
-	} else {
-		node* temp = head;
-		for(int i = 0; i < pos - 1; i++) temp = temp->next;
-		newNode->next = temp->next;
-		temp->next = newNode;
-	}
-	count++;
-}
-
-void List::deleteStart() {
-    if (head == NULL) {
-        cout << "List is empty" << endl;
-        return;
+void ll::display() {
+  node *temp = head;
+  if(!temp) {
+    cout << "List is empty." << endl;
+    return;
+  }
+  cout << "Club Members:\n";
+  while(temp) {
+    switch(temp->role) {
+      case PRESIDENT:
+        cout << "President: " << temp->name << ", PRN: " << temp->PRN << endl;
+        break;
+      case SECRETARY:
+        cout << "Secretary: " << temp->name << ", PRN: " << temp->PRN << endl;
+        break;
+      case MEMBER:
+        cout << "Member: " << temp->name << ", PRN: " << temp->PRN << endl;
+        break;
     }
-    node* temp = head;
-    head = head->next;
-    delete temp;
-    count--;
+    temp = temp->next;
+  }
 }
 
-void List::deleteEnd() {
-    if (head == NULL) {
-        cout << "List is empty" << endl;
-        return;
-    }
-    if (head->next == NULL) {
-        delete head; 
-        head = NULL; 
-    } else {
-        node* temp = head;
-        while (temp->next->next != NULL) {
-            temp = temp->next;
-        }
-        node* lastNode = temp->next;
-        temp->next = NULL;
-        delete lastNode; 
-    }
-    count--;
+void ll::addPresident() {
+  node *newPresident = createNode(PRESIDENT);
+  newPresident->next = head;
+  head = newPresident;
+  if(!tail) tail = newPresident;
 }
 
-void List::deleteAt(int i) {
-	if(i < 0 || i > count) {
-		cout << "Invalid Position" << endl;
-		return;
-	}
-	if(i == 0) {
-		node* temp = head;
-		head = head->next;
-		delete temp;
-	} else {
-		node* temp = head;
-		for(int j = 0; j < i - 1; j++) temp = temp->next;
-		node* temp2 = temp->next;
-		temp->next = temp2->next;
-		delete temp2;
-	}
-	count--;
+void ll::addSecretary() {
+  node *newSecretary = createNode(SECRETARY);
+  if(!head) {
+    head = newSecretary;
+    tail = newSecretary;
+  } else {
+    tail->next = newSecretary;
+    tail = newSecretary;
+  }
 }
 
-void List::display() {
-	node* temp = head;
-	while(temp != NULL) {
-		cout << "PRN: " << temp->prn << ", Name: " << temp->name << endl;
-		temp = temp->next;
-	}
-}
-int List::countAll() { return count; }
-void List::concatenate(List& A, List& B) {
-	if (head == NULL) {
-		if(A.head != NULL) {
-			head = A.head;
-			count = A.count;
-		}
-		if(B.head != NULL) {
-			node* temp = head;
-			while(temp->next != NULL) temp = temp->next;
-			if(temp != NULL) {
-				temp->next = B.head;
-				count += B.count;
-			} else {
-				head = B.head;
-				count = B.count;
-			}
-		}
-
-		A.head = NULL;
-		A.count = 0;
-		B.head = NULL;
-		B.count = 0;
-	} else {
-		node* temp = head;
-		while(temp->next != NULL) temp = temp->next;
-		if(A.head != NULL) {
-			temp->next = A.head;
-			count += A.count;
-		}
-
-		while(temp->next != NULL) temp = temp->next;
-		if(B.head != NULL) {
-			temp->next = B.head;
-			count += B.count;
-		}
-
-		A.head = NULL;
-		A.count = 0;
-		B.head = NULL;
-		B.count = 0;
-	}
+void ll::addMember() {
+  node *newMember = createNode(MEMBER);
+  if(!head) {
+    head = newMember;
+    tail = newMember;
+  } else {
+    tail->next = newMember;
+    tail = newMember;
+  }
 }
 
-void List::op () {
-	while(1) {
-		int choice;
-		cout << "\nEnter: \n1. Add \n2. Delete \n3. Member's Count \n4. Display \n5. Reverse the List \n0. Prev Menu" << endl;
-		cin >> choice;
-		switch(choice) {
-			case 1:
-				char c;
-				cout << "\n Enter:\n A. Add President \n B. Add Secretary \n C. Add Member \n 0. Prev Menu" << endl;
-				cin >> c;
-				switch(c) {
-					case 'A': insertStart(); break;
-					case 'B': insertEnd(); break;
-					case 'C': insertAt(2); break;
-					default: break;
-				}
-				break;
-
-			case 2:
-				char d;
-				cout << "\n Enter:\n A. Delete President \n B. Delete Secretary \n C. Delete Member \n 0. Prev Menu" << endl;
-				cin >> d;
-				switch(d) {
-					case 'A': deleteStart(); break;
-					case 'B': deleteEnd(); break;
-					case 'C': deleteAt(2); break;
-					default: break;
-				}
-				break;
-			case 3: cout << "Count: " << countAll() << endl; break;
-			case 4: display(); break;
-			case 5: reverse(); break;
-			case 0: break;
-			default: cout << "Wrong Choice" << endl;
-		}
-		if(choice == 0) break;
-	}
+void ll::removePresident() {
+  if(!head) {
+    cout << "No president to remove." << endl;
+    return;
+  }
+  node *temp = head;
+  head = head->next;
+  delete temp;
+  cout << "President removed." << endl;
 }
 
+void ll::deleteSecretary() {
+  if(!head || head->role != SECRETARY) {
+    cout << "No secretary to remove." << endl;
+    return;
+  }
+  if(head == tail) { // Only one member
+    delete head;
+    head = tail = nullptr;
+    cout << "Secretary removed." << endl;
+    return;
+  }
 
-
-node* List::rev(node *t) {
-	if(t == NULL || t->next == NULL) return t;
-	node* newHead = rev(t->next);
-	t->next->next = t;
-	t->next = NULL;
-	return newHead;
+  node *temp = head;
+  while(temp->next && temp->next->role != SECRETARY) { temp = temp->next; }
+  if(!temp->next) {
+    cout << "No secretary to remove." << endl;
+    return;
+  }
+  node *secretaryToRemove = temp->next;
+  temp->next = secretaryToRemove->next;
+  if(secretaryToRemove == tail) { tail = temp; }
+  delete secretaryToRemove;
+  cout << "Secretary removed." << endl;
 }
 
-void List::reverse() { head = rev(head); }
-node* List::readAt(int i) {
-	if(i < 0 || i > count) {
-		cout << "Invalid Position" << endl;
-		return NULL;
-	}
-	node* temp = head;
-	for(int j = 0; j < i; j++) temp = temp->next;
-	return temp;
+void ll::deleteMember(int prn) {
+  node *temp = head;
+  node *prev = nullptr;
+  while(temp && temp->PRN != prn) {
+    prev = temp;
+    temp = temp->next;
+  }
+  if(!temp) {
+    cout << "Member with PRN " << prn << " not found." << endl;
+    return;
+  }
+
+  if(prev) prev->next = temp->next;
+  else head = temp->next;
+
+  if(temp == tail) { tail = prev; }
+  delete temp;
+  cout << "Member with PRN " << prn << " removed." << endl;
 }
 
+int ll::computeTotal() {
+  node *temp = head;
+  int count = 0;
+  while(temp) {
+    count++;
+    temp = temp->next;
+  }
+  return count;
+}
+
+void ll::concatLists(ll &other) {
+  if(!head) head = other.head;
+  else tail->next = other.head;
+  if(other.tail) { tail = other.tail; }
+  other.head = nullptr;
+  other.tail = nullptr;
+  cout << "Lists concatenated." << endl;
+}
 
 int main() {
-	List L, X, Y;
-	while(1) {
-		int c;
-		cout << "Enter your choice:\n1. Enter List A\n2. Enter List B\n3. Concatenate\n0. Exit\n-- Enter your choice --" << endl;
-		cin >> c;
-		switch(c) {
-			case 1: cout << "\n List A: "; X.op(); break;
-			case 2: cout << "\n List B: "; Y.op(); break;
-			case 3: L.concatenate(X, Y); L.display(); break;
-			case 0: cout << "Exiting..."; return 0;
-		}
-	}
+  ll list1, list2;
+  int choice, listChoice;
+
+  do {
+    cout << "\n=== Select Option ===\n1. List 1\n2. List 2\n3. Concatenate "
+            "Lists\n0. Exit\nEnter choice: ";
+    cin >> listChoice;
+    ll *currentList = (listChoice == 1)   ? &list1
+                      : (listChoice == 2) ? &list2
+                                          : nullptr;
+
+    if(listChoice == 3) {
+      cout << "Concatenating List 1 and List 2..." << endl;
+      list1.concatLists(list2);
+    } else if(!currentList) {
+      cout << "Invalid list choice. Please try again." << endl;
+      continue;
+    }
+
+    if(listChoice == 0) break;
+
+    cout << "\n1. Create\n2. Add President\n3. Add Secretary\n4. Add "
+            "Member\n5. Display\n"
+         << "6. Remove President\n7. Remove Secretary\n8. Remove Member\n9. "
+            "Total Members\n"
+         << "0. Exit";
+    do {
+      cout << "\nEnter your choice: ";
+      cin >> choice;
+      switch(choice) {
+        case 1: currentList->create(); break;
+        case 2: currentList->addPresident(); break;
+        case 3: currentList->addSecretary(); break;
+        case 4: currentList->addMember(); break;
+        case 5: currentList->display(); break;
+        case 6: currentList->removePresident(); break;
+        case 7: currentList->deleteSecretary(); break;
+        case 8: {
+          int prn;
+          cout << "Enter PRN of member to be deleted: ";
+          cin >> prn;
+          currentList->deleteMember(prn);
+          break;
+        }
+        case 9:
+          cout << "Total members (including President & Secretary): "
+               << currentList->computeTotal() << endl;
+          break;
+        case 0: break;
+        default: cout << "Invalid choice." << endl;
+      }
+    } while(choice != 0);
+  } while(listChoice != 0);
+
+  return 0;
 }

@@ -1,5 +1,4 @@
 """
-* Eshan Nahar
 9. WAPP to compute following computation on matrix:
     
   a) Addition of two matrices 

@@ -36,14 +36,6 @@ def radixsort(num):
     while maximum // n > 0:
         countingsort(num, n)
         n *= 10 # Increase exponent 
-        
-def countDigits(n): # Helper function (Unused) [Thought of using because same number of digits should be after decimal point in this]
-	cnt = 0
-	countAfterDecimal = str(n)[::-1].find('.')
-	while n>0:
-		cnt += 1
-		n = n // 10
-	return cnt + countAfterDecimal
 
 num = []
 num1 = []

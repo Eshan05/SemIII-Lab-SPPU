@@ -29,26 +29,34 @@ def input_list(prompt):
 	student_list = []
 	print(prompt)
 	while True:
-				try:
-						prn = input("Enter PRN (or press Enter to finish): ").strip()
-						if not prn:
-								break
-						day = int(input("Enter day of birth (1-31): ").strip())
-						month = int(input("Enter month of birth (1-12): ").strip())
-						if day < 1 or day > 31 or month < 1 or month > 12:
-								print("Invalid date or month. Please try again.")
-								continue
-						student_list.append((prn, day, month))
-				except ValueError:
-						print("Invalid input. Please enter numbers for day and month.")
-	student_list.sort(key=lambda x: (x[2], x[1]))  # Sort by month, then by day
+		try:
+			prn = input("Enter PRN (or press Enter to finish): ").strip()
+			if not prn:
+				break
+			day = int(input("Enter day of birth (1-31): ").strip())
+			month = int(input("Enter month of birth (1-12): ").strip())
+			if day < 1 or day > 31 or month < 1 or month > 12:
+				print("Invalid date or month. Please try again.")
+				continue
+			student_list.append((prn, day, month))
+		except ValueError:
+			print("Invalid input. Please enter numbers for day and month.")
+	# student_list.sort(key=lambda x: (x[2], x[1]))  # Sort by month, then by day
+	
+	for i in range(len(student_list)):
+		for j in range(0, len(student_list) - i - 1):
+			# Compare month, then day
+			if (student_list[j][2] > student_list[j + 1][2]) or \
+					(student_list[j][2] == student_list[j + 1][2] and student_list[j][1] > student_list[j + 1][1]):
+					# Swap if out of order
+					student_list[j], student_list[j + 1] = student_list[j + 1], student_list[j]
 	return student_list
 
 def display_list(student_list):
 	# Display the sorted list of students' birthdays
 	print("\nSorted List of SE Computer Students' DOB:")
 	for prn, day, month in student_list:
-				print(f"PRN: {prn}, Date of Birth: {day}/{month}")
+		print(f"PRN: {prn}, Date of Birth: {day}/{month}")
 
 def main():
 	list_a = []

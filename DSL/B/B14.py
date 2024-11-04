@@ -37,8 +37,12 @@ def main():
 	else:
 		print("Invalid choice")
 	print("Top 5 scores are:")
-	for i, percentage in enumerate(percentages[:5], 1):
-		print(f"{i}: {percentage:.2f}%")
+	# for i, percentage in enumerate(percentages[:5], 1):
+	# 	print(f"{i}: {percentage:.2f}%")
+	cnt = 1
+	for percentage in percentages[:5]:
+		print(f"{cnt}: {percentage:.2f}%")
+		cnt += 1
 
 if __name__ == "__main__":
 	main()

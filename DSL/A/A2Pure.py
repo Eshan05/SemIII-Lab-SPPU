@@ -13,6 +13,7 @@ def accept_marks(A):
 	n = int(input("Enter the total no. of student : "))
 	for i in range(n) :
 		while True :
+			print("Put AB for absent students")
 			x = input("Enter the marks scored in FDS for student %d : "%(i+1))
 			if(x == "AB"):
 				x = -1   # Absent

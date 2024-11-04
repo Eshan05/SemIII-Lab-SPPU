@@ -132,7 +132,11 @@ def main_menu():
 				row = input().strip()
 				if row == "":
 					break
-				denseM1.append(list(map(int, row.split())))
+				# denseM1.append(list(map(int, row.split())))
+				rowL = []
+				for x in row.split():
+					rowL.append(int(x))
+				denseM1.append(rowL)
 			S1 = convert(denseM1)
 			print("\n Dense Matrix 1:")
 			for row in denseM1:
@@ -146,7 +150,11 @@ def main_menu():
 				row = input().strip()
 				if row == "":
 					break
-				denseM2.append(list(map(int, row.split())))
+				# denseM2.append(list(map(int, row.split())))
+				rowL = []
+				for x in row.split():
+					rowL.append(int(x))
+				denseM2.append(rowL)
 			S2 = convert(denseM1)
 			print("\n Dense Matrix 2:")
 			for row in denseM2:
