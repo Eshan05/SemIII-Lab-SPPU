@@ -18,4 +18,7 @@ To compile in **DSL** use `python ...` or `python3 ...` and `g++ ...`. For **CGL
     1. I would suggest **DO NOT** dual boot solely for the purpose of `graphics.h`, if anything you should dualboot for everything BUT `graphics.h`
     2. Instead just get either VirtualBox or some other VM and install `Ubuntu 16.x` (Xenial) and then follow the GFG tutorial (You may come across `guile` error which you can solve by using steps in [AskUbuntu](https://askubuntu.com/a/1120362)
     3. Now do `graphics.h` programming in the VM. Take screenshots with `PRINT SCREEN` and mail them to yourself
-6. Just a suggestion: Don't just copy paste blindly 
+
+## IMP
+
+Don't use these code and outputs directly. A lot of them (As of right now) use in-built functions and other libraries not supposed to be used. Change in progress 
