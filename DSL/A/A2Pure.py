@@ -89,13 +89,14 @@ def display_mark_with_highest_frequency(A) :
 	
 def main():
 	FDS_Marks = []
+	print ("\t\t1 : Accept FDS Marks")
+	print ("\t\t2 : Average score of class")
+	print ("\t\t3 : Highest score and lowest score of class")
+	print ("\t\t4 : Count of students who were absent for the test")
+	print ("\t\t5 : Display mark with highest frequency")
+	print ("\t\t6 : Exit")
 	while True :
-		print ("\t\t1 : Accept FDS Marks")
-		print ("\t\t2 : Average score of class")
-		print ("\t\t3 : Highest score and lowest score of class")
-		print ("\t\t4 : Count of students who were absent for the test")
-		print ("\t\t5 : Display mark with highest frequency")
-		print ("\t\t6 : Exit")
+		
 		ch = int(input("Enter your choice : "))
 		if (ch == 6):
 			print ("End of Program")

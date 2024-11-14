@@ -147,7 +147,7 @@ void ll::removePresident() {
 }
 
 void ll::deleteSecretary() {
-  if(!head || head->role != SECRETARY) {
+  if(!head || tail->role != SECRETARY) {
     cout << "No secretary to remove." << endl;
     return;
   }
@@ -230,7 +230,10 @@ int main() {
       continue;
     }
 
-    if(listChoice == 0) break;
+    if(listChoice == 0) {
+      cout << "Exiting...";
+      break;
+    }
 
     cout << "\n1. Create\n2. Add President\n3. Add Secretary\n4. Add "
             "Member\n5. Display\n"
