@@ -12,8 +12,8 @@ To compile in **DSL** use `python ...` or `python3 ...` and `g++ ...`. For **CGL
 
 1. ⭐ Star this repo if you found it useful!
 2. If you find any errors or something missing then feel free to report it
-3. In DSL `Pure` means without using the in-built functions. Rest are self-explanatory. Others are just for exploring
-4. Do abide by the (Modified) MIT License
+3. `Pure` means without using the in-built functions. Rest are self-explanatory. Others are just for exploring other ways of doing programs ignore them
+4. Do abide by the MIT License
 5. ### If you want to run `graphics.h`
     1. I would suggest **DO NOT** dual boot solely for the purpose of `graphics.h`, if anything you should dualboot for everything BUT `graphics.h`
     2. Instead just get either VirtualBox or some other VM and install `Ubuntu 16.x` (Xenial) and then follow the GFG tutorial (You may come across `guile` error which you can solve by using steps in [AskUbuntu](https://askubuntu.com/a/1120362)
@@ -22,4 +22,4 @@ To compile in **DSL** use `python ...` or `python3 ...` and `g++ ...`. For **CGL
 
 ## IMP
 
-Some codes (As of right now) use in-built functions and other libraries not supposed to be used. Change in progress
+Few codes (As of right now) use in-built functions and other libraries not supposed to be used. Change in progress
