@@ -24,12 +24,11 @@ def findSaddlePoint(M):
 			return True
 	return False
 
-if __name__ == '__main__':
-	M = [
-		[1, 2, 3],
-		[4, 5, 6],
-		[7, 8, 9] # Output: 7
-	]
+M = [
+	[1, 2, 3],
+	[4, 5, 6],
+	[7, 8, 9] # Output: 7
+]
 
-	if(findSaddlePoint(M) == False):
-		print("No Saddle Point")
+if(findSaddlePoint(M) == False):
+	print("No Saddle Point")

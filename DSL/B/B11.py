@@ -93,44 +93,43 @@ class Searching:
   def printList(self):
     print(self.__searchList)
 
-if __name__ == "__main__":
-  obj = Searching()
-  obj.accept()
-  obj.printList()
-  while True:
-    print("1. Linear Search\n2. Sentinel Search\n3. Binary Search\n4. Fibonacci Search\n5. Exit")
-    choice = int(input("Enter your choice: "))
-    if choice == 1:
-      print("Selected Linear Search")
-      key = int(input("Enter the element to be searched: "))
-      if obj.linear(key) == -1:
-        print("Element not found")
-      else:
-        print("Element found at index", obj.linear(key))
-    if choice == 2:
-      print("Selected Sentinel Search")
-      key = int(input("Enter the element to be searched: "))
-      if obj.sentinel(key) == -1:
-        print("Element not found")
-      else:
-        print("Element found at index", obj.sentinel(key))
-    if choice == 3:
-      print("Selected Binary Search")
-      print("Sorting the array...")
-      obj.insertionSort()
-      # obj.printList()
-      key = int(input("Enter the element to be searched: "))
-      if obj.binary(key) == -1:
-        print("Element not found")
-      else:
-        print("Element found at index", obj.binary(key))
-    if choice == 4:
-      print("Selected Fibonacci Search")
-      print("Sorting the array...")
-      key = int(input("Enter the element to be searched: "))
-      if obj.fibonacci(key) == -1:
-        print("Element not found")
-      else:
-        print("Element found at index", obj.fibonacci(key))
-    if choice == 5:
-      break
+obj = Searching()
+obj.accept()
+obj.printList()
+while True:
+  print("1. Linear Search\n2. Sentinel Search\n3. Binary Search\n4. Fibonacci Search\n5. Exit")
+  choice = int(input("Enter your choice: "))
+  if choice == 1:
+    print("Selected Linear Search")
+    key = int(input("Enter the element to be searched: "))
+    if obj.linear(key) == -1:
+      print("Element not found")
+    else:
+      print("Element found at index", obj.linear(key))
+  if choice == 2:
+    print("Selected Sentinel Search")
+    key = int(input("Enter the element to be searched: "))
+    if obj.sentinel(key) == -1:
+      print("Element not found")
+    else:
+      print("Element found at index", obj.sentinel(key))
+  if choice == 3:
+    print("Selected Binary Search")
+    print("Sorting the array...")
+    obj.insertionSort()
+    # obj.printList()
+    key = int(input("Enter the element to be searched: "))
+    if obj.binary(key) == -1:
+      print("Element not found")
+    else:
+      print("Element found at index", obj.binary(key))
+  if choice == 4:
+    print("Selected Fibonacci Search")
+    print("Sorting the array...")
+    key = int(input("Enter the element to be searched: "))
+    if obj.fibonacci(key) == -1:
+      print("Element not found")
+    else:
+      print("Element found at index", obj.fibonacci(key))
+  if choice == 5:
+    break

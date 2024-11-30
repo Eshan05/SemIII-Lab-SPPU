@@ -53,7 +53,24 @@ class ll {
   node *createNode(Role role);
 };
 
-bool ll::isValidPRN(int prn) { return prn > 0; }
+bool ll::isValidPRN(int prn) {
+  // First, check if PRN is greater than 0
+  if(prn <= 0) {
+    cout << "Invalid PRN number: " << prn << endl;
+    return false;
+  }
+
+  node *temp = head;
+  while(temp) {
+    if(temp->PRN == prn) {
+      cout << "PRN " << prn << " already exists. Cannot add." << endl;
+      return false; // PRN is not unique
+    }
+    temp = temp->next;
+  }
+
+  return true; // PRN is valid and unique
+}
 
 node *ll::createNode(Role role) {
   string name;
@@ -73,7 +90,10 @@ node *ll::createNode(Role role) {
   }
   cout << "Enter name: ";
   cin >> name;
-
+  cout << "Successfully added:"
+       << (role == PRESIDENT ? " President"
+                             : (role == SECRETARY ? " Secretary" : " Member"))
+       << ": (" << name << ") [" << prn << "]" << endl;
   return new node(name, prn, role);
 }
 
@@ -95,11 +115,11 @@ void ll::display() {
       case PRESIDENT:
         cout << "President: " << temp->name << ", PRN: " << temp->PRN << endl;
         break;
-      case SECRETARY:
-        cout << "Secretary: " << temp->name << ", PRN: " << temp->PRN << endl;
-        break;
       case MEMBER:
         cout << "Member: " << temp->name << ", PRN: " << temp->PRN << endl;
+        break;
+      case SECRETARY:
+        cout << "Secretary: " << temp->name << ", PRN: " << temp->PRN << endl;
         break;
     }
     temp = temp->next;
@@ -107,6 +127,10 @@ void ll::display() {
 }
 
 void ll::addPresident() {
+  if(head && head->role == PRESIDENT) {
+    cout << "There is already a President" << endl;
+    return;
+  }
   node *newPresident = createNode(PRESIDENT);
   newPresident->next = head;
   head = newPresident;
@@ -114,6 +138,10 @@ void ll::addPresident() {
 }
 
 void ll::addSecretary() {
+  if(tail && tail->role == SECRETARY) {
+    cout << "There is already a Secretary" << endl;
+    return;
+  }
   node *newSecretary = createNode(SECRETARY);
   if(!head) {
     head = newSecretary;
@@ -202,12 +230,24 @@ int ll::computeTotal() {
 }
 
 void ll::concatLists(ll &other) {
-  if(!head) head = other.head;
-  else tail->next = other.head;
-  if(other.tail) { tail = other.tail; }
+  // cout << "List 1 head: " << head->name << ", tail: " << tail->name << endl;
+  // cout << "List 2 head: " << other.head->name << ", tail: " << other.tail->name << endl;
+  if(!head) {
+    head = other.head;
+    tail = other.tail;
+  } else {
+    tail->next = other.head;
+    if(other.tail) {
+      tail = other.tail; // Update tail if necessary
+    }
+  }
+
   other.head = nullptr;
   other.tail = nullptr;
+  // cout << "List 1 head: " << head->name << ", tail: " << tail->name << endl;
   cout << "Lists concatenated." << endl;
+  display();
+  cout << "Total members (including President & Secretary): " << computeTotal();
 }
 
 int main() {
@@ -241,7 +281,7 @@ int main() {
             "Total Members\n"
          << "0. Exit";
     do {
-      cout << "\nEnter your choice: ";
+      cout << "\n-> Enter your choice: ";
       cin >> choice;
       switch(choice) {
         case 1: currentList->create(); break;

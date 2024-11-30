@@ -1,118 +1,140 @@
-/**
- * * Eshan Nahar
- * Write C++ program using STL for sorting and searching user defined records such as personal records (Name, DOB, Telephone number, ...) using vector container
- * OR
- */
+#include <iostream>
+#include <string>
 
-#include<bits/stdc++.h>
 using namespace std;
 
 class PersonalRecord {
-	private: 
-		string name;
-		string dob;
-		string phone;
-	public:
-		PersonalRecord(const string& name = "", const string& dob = "", const string& phone = "") : name(name), dob(dob), phone(phone) {}
-		string getName() const { return name; }
-		void setName(const string& name) { this->name = name; }
-		// Use this->name to distinguish from member variable and parameter passed
-		void display() const {
-			cout << "Name: " << name << ", DOB: " << dob << ", Phone: " << phone << endl;
-		}
+ private:
+  string name;
+  string dob; // Format: YYYY-MM-DD
+  string phone;
 
-		// Using const so it won't modify the object on which it's called
-		// Comparision required for sorting
-		bool operator<(const PersonalRecord& other) const {
-			return name < other.name;
-		}
+ public:
+  PersonalRecord(const string &name = "", const string &dob = "",
+                 const string &phone = "")
+      : name(name), dob(dob), phone(phone) {}
 
-		// Equality required for searching
-		bool operator==(const PersonalRecord& other) const {
-			return name == other.name;
-		}
+  string getName() const { return name; }
+
+  void display() const {
+    cout << "Name: " << name << ", DOB: " << dob << ", Phone: " << phone
+         << endl;
+  }
+
+  bool operator<(const PersonalRecord &other) const {
+    return name < other.name;
+  }
+
+  bool operator==(const PersonalRecord &other) const {
+    return name == other.name;
+  }
 };
 
 class PersonalRecordManager {
-	private:
-		vector<PersonalRecord> records;
-	public:
-		void addRecord() {
-			string name, dob, phone;
-			cout << "Enter Name: "; getline(cin, name);
-			cout << "Enter DOB (YYYY-MM-DD): "; getline(cin, dob);
-			cout << "Enter Phone No.: "; getline(cin, phone);
-			records.emplace_back(name,dob,phone);
-			cout << "Record added!\n";
-		}
+ private:
+  PersonalRecord records[100];
+  int recordCount;
 
-		void displayRecords() const {
-			if(records.empty()) cout << "No records.\n";
-			else 
-				for(const auto& record : records)
-					record.display();
-		}
+ public:
+  PersonalRecordManager() : recordCount(0) {}
 
-		void sortRecords() {
-			sort(records.begin(), records.end());
-			cout << "Records sorted by name.\n";
-		}
+  void addRecord() {
+    string name, dob, phone;
+    cout << "Enter Name: ";
+    cin.ignore(); // Ignore any newline
+    getline(cin, name);
+    cout << "Enter DOB (YYYY-MM-DD): ";
+    getline(cin, dob);
+    cout << "Enter Phone No.: ";
+    getline(cin, phone);
+    records[recordCount++] = PersonalRecord(name, dob, phone);
+    cout << "Record added!\n";
+  }
 
-		void searchRecord() const {
-			string searchName;
-			cout << "Enter a name to search: ";
-			getline(cin, searchName);
-			PersonalRecord searchRecord(searchName);
-			auto it = find(records.begin(), records.end(), searchRecord);
-			if(it != records.end()) {
-				cout << "Record found:\n";
-				it -> display();
-			} else cout << "Record not found.\n";
-		}
+  void displayRecords() const {
+    if(recordCount == 0) {
+      cout << "No records.\n";
+    } else {
+      for(int i = 0; i < recordCount; ++i) { records[i].display(); }
+    }
+  }
 
-		void deleteRecord() {
-			string deleteName;
-			cout << "Enter name to delete: ";
-			getline(cin, deleteName);
-			for(auto it=records.begin(); it!=records.end(); ++it) {
-				if(it -> getName() == deleteName) {
-					records.erase(it);
-					cout << "Record deleted!\n";
-					return;
-				}
-			}
-			cout << "Record not found.\n";
-		}
+  void sortRecords() {
+    for(int i = 0; i < recordCount - 1; ++i) {
+      for(int j = 0; j < recordCount - i - 1; ++j) {
+        if(records[j] < records[j + 1]) {
+          // Swap records[j] and records[j + 1]
+          PersonalRecord temp = records[j];
+          records[j] = records[j + 1];
+          records[j + 1] = temp;
+        }
+      }
+    }
+    cout << "Records sorted by name.\n";
+  }
 
-		static void printMenu() {
-			cout << "\nMenu:\n";
-			cout << "1. Add Record\n";
-			cout << "2. Display Records\n";
-			cout << "3. Sort Records\n";
-			cout << "4. Search Record\n";
-			cout << "5. Delete Record\n";
-			cout << "6. Exit\n";
-			
-		}
+  void searchRecord() const {
+    string searchName;
+    cout << "Enter a name to search: ";
+    cin.ignore();
+    getline(cin, searchName);
+    PersonalRecord searchRecord(searchName);
+    for(int i = 0; i < recordCount; ++i) {
+      if(records[i] == searchRecord) {
+        cout << "Record found:\n";
+        records[i].display();
+        return;
+      }
+    }
+    cout << "Record not found.\n";
+  }
+
+  void deleteRecord() {
+    string deleteName;
+    cout << "Enter name to delete: ";
+    cin.ignore();
+    getline(cin, deleteName);
+    for(int i = 0; i < recordCount; ++i) {
+      if(records[i].getName() == deleteName) {
+        // Shift records to delete the specified one
+        for(int j = i; j < recordCount - 1; ++j) {
+          records[j] = records[j + 1];
+        }
+        recordCount--;
+        cout << "Record deleted!\n";
+        return;
+      }
+    }
+    cout << "Record not found.\n";
+  }
+
+  static void printMenu() {
+    cout << "\nMenu:\n";
+    cout << "1. Add Record\n";
+    cout << "2. Display Records\n";
+    cout << "3. Sort Records\n";
+    cout << "4. Search Record\n";
+    cout << "5. Delete Record\n";
+    cout << "6. Exit\n";
+  }
 };
 
 int main() {
-	PersonalRecordManager manager;
-	int choice;
-	PersonalRecordManager::printMenu();
-	do {
-		cout << "Enter your choice: ";
-		cin >> choice;
-		cin.ignore();
-		switch(choice) {
-			case 1: manager.addRecord(); break;
-			case 2: manager.displayRecords(); break;
-			case 3: manager.sortRecords(); break;
-			case 4: manager.searchRecord(); break;
-			case 5: manager.deleteRecord(); break;
-			case 6: cout << "Exiting\n"; break;
-			default: cout << "Invalid choice\n"; break;
-		} 
-	} while(choice!=6);
-	return 0;
+  PersonalRecordManager manager;
+  int choice;
+  PersonalRecordManager::printMenu();
+  do {
+    cout << "Enter your choice: ";
+    cin >> choice;
+    switch(choice) {
+      case 1: manager.addRecord(); break;
+      case 2: manager.displayRecords(); break;
+      case 3: manager.sortRecords(); break;
+      case 4: manager.searchRecord(); break;
+      case 5: manager.deleteRecord(); break;
+      case 6: cout << "Exiting\n"; break;
+      default: cout << "Invalid choice\n"; break;
+    }
+  } while(choice != 6);
+  return 0;
 }

@@ -44,5 +44,4 @@ def main():
 		print(f"{cnt}: {percentage:.2f}%")
 		cnt += 1
 
-if __name__ == "__main__":
-	main()
+main()

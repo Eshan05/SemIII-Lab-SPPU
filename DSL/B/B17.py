@@ -71,5 +71,4 @@ def main():
 	if choice == 'Y':
 		top_five(sorted_percentages)
 
-if __name__ == "__main__":
-    main()
+main()

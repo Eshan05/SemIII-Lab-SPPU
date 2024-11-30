@@ -2,35 +2,36 @@
 #include <iostream>
 #include <string>
 #include <vector>
+using namespace std;
 
 struct Node {
 	bool isAtomic;
-	std::string value;
-	std::vector<Node *> children;
+	string value;
+	vector<Node *> children;
 
-	Node(bool atomic, const std::string &val = "")
+	Node(bool atomic, const string &val = "")
 		: isAtomic(atomic), value(val) {}
 };
 
 
-Node *createAtomicNode(const std::string &value) {
+Node *createAtomicNode(const string &value) {
 	return new Node(true, value);
 }
 
-Node *createListNode(const std::vector<Node *> &children) {
+Node *createListNode(const vector<Node *> &children) {
 	Node *listNode = new Node(false);
 	listNode->children = children;
 	return listNode;
 }
 
-Node *parseGLL(const std::string &str, size_t &pos) {
-	std::vector<Node *> children;
+Node *parseGLL(const string &str, size_t &pos) {
+	vector<Node *> children;
 
 	if (str[pos] == '{') {
 		++pos;
 		while (pos < str.size()) {
 
-			while (std::isspace(str[pos]))
+			while (isspace(str[pos]))
 				++pos;
 
 			if (str[pos] == '}') {
@@ -39,28 +40,28 @@ Node *parseGLL(const std::string &str, size_t &pos) {
 			} else if (str[pos] == '{') {
 				children.push_back(parseGLL(str, pos));
 			} else {
-				std::string value;
-				while (str[pos] != ',' && str[pos] != '}' && !std::isspace(str[pos])) {
+				string value;
+				while (str[pos] != ',' && str[pos] != '}' && !isspace(str[pos])) {
 					value += str[pos++];
 				}
 				children.push_back(createAtomicNode(value));
 			}
 
-			while (str[pos] == ',' || std::isspace(str[pos]))
+			while (str[pos] == ',' || isspace(str[pos]))
 				++pos;
 		}
 		return createListNode(children);
 	} else {
-		throw std::runtime_error("Invalid input format");
+		throw runtime_error("Invalid input format");
 	}
 }
 
 void printNodeDetails(Node *node, int depth = 0) {
-	std::string indent(depth * 2, ' ');
+	string indent(depth * 2, ' ');
 	if (node->isAtomic) {
-		std::cout << indent << "Atomic: " << node->value << std::endl;
+		cout << indent << "Atomic: " << node->value << endl;
 	} else {
-		std::cout << indent << "List:" << std::endl;
+		cout << indent << "List:" << endl;
 		for (const auto &child : node->children) {
 			printNodeDetails(child, depth + 1);
 		}
@@ -77,18 +78,18 @@ void deleteGLL(Node *node) {
 }
 
 int main() {
-	std::string input;
-	std::cout << "Enter the set in the format: {a, b, {c, d, e, {f, g}, h, l}}: ";
-	std::getline(std::cin, input);
+	string input;
+	cout << "Enter the set in the format: {a, b, {c, d, e, {f, g}, h, l}}: ";
+	getline(cin, input);
 
 	size_t pos = 0;
 	try {
 		Node *gll = parseGLL(input, pos);
-		std::cout << "Parsed GLL structure:" << std::endl;
+		cout << "Parsed GLL structure:" << endl;
 		printNodeDetails(gll);
 		deleteGLL(gll);
-	} catch (const std::exception &e) {
-		std::cerr << "Error parsing input: " << e.what() << std::endl;
+	} catch (const exception &e) {
+		cerr << "Error parsing input: " << e.what() << endl;
 	}
 
 	return 0;

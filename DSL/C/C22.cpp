@@ -75,7 +75,6 @@ Node *intersection(Node *headA, Node *headB) {
   return result;
 }
 
-// Function to compute the union of two sets
 Node *unionSets(Node *headA, Node *headB) {
   Node *result = nullptr;
   Node *tempA = headA;
@@ -106,14 +105,12 @@ Node *difference(Node *headA, Node *headB) {
   return result;
 }
 
-// Function to compute the symmetric difference (A Δ B)
 Node *symmetricDifference(Node *headA, Node *headB) {
   Node *unionAB = unionSets(headA, headB);
   Node *intersectionAB = intersection(headA, headB);
   return difference(unionAB, intersectionAB);
 }
 
-// Function to count the number of nodes in a list
 int countNodes(Node *head) {
   int count = 0;
   Node *temp = head;

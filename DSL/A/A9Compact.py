@@ -70,8 +70,7 @@ def main():
         else:
             print("Invalid choice! Select a valid option.")
 
-if __name__ == "__main__":
-    main()
+main()
 
 """
 Menu:

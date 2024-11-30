@@ -189,11 +189,9 @@ def main_menu():
 		else:
 			print("\nInvalid choice.")
 
-if __name__ == "__main__":
-	main_menu()
+main_menu()
 
 """
-if __name__ == "__main__":
     M1 = [[1, 0], [0, 2]]
     M2 = [[3, 0, 5],[0, 7, 0]]
     sparse_M1 = convert(M1)

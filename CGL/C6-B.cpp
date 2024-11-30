@@ -92,9 +92,9 @@ void keyboard(unsigned char key, int x, int y) {
       sz += 0.1;
       break;
     case 'x':
-      sx = std::max(0.1f, sx - 0.1f);
-      sy = std::max(0.1f, sy - 0.1f);
-      sz = std::max(0.1f, sz - 0.1f);
+      sx = max(0.1f, sx - 0.1f);
+      sy = max(0.1f, sy - 0.1f);
+      sz = max(0.1f, sz - 0.1f);
       break;                 // Scale down
     case 27: exit(0); break; // ESC key to exit
   }

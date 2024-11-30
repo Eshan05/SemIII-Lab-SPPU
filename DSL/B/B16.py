@@ -75,5 +75,4 @@ def main():
 			print("Invalid choice")
 			flag = 1
 
-if __name__ == "__main__":
-	main()
+main()

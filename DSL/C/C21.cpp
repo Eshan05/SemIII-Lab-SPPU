@@ -123,6 +123,12 @@ class AppointmentList {
     cout << "Enter your ID: ";
     cin >> id;
 
+    if(startHour < 9 || startHour >= 17 ||
+       (startHour == 17 && startMinute > 0)) {
+      cout << "Invalid appointment time.\n";
+      return;
+    }
+
     Appointment *current = head;
     Appointment *previous = nullptr;
     while(current && !(current->startHour == startHour &&
@@ -186,7 +192,7 @@ int main() {
     cout << "\n 4. Cancel an Appointment";
     cout << "\n 5. Sort Slots Based on Time";
     cout << "\n 0. Exit";
-    cout << "\n\n\t Enter your choice: ";
+    cout << "\n\n\-> Enter your choice: ";
     cin >> ch;
     switch(ch) {
       case 1: A1.create_Shed(); break;
