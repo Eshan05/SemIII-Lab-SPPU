@@ -44,7 +44,8 @@ class Stack {
 
 bool isWellParenthesized(const string &expression) {
   Stack s(expression.size());
-  for(char ch : expression) {
+  for(int i = 0; i < expression.size(); ++i) {
+    char ch = expression[i];
     switch(ch) {
       case '(':
       case '{':

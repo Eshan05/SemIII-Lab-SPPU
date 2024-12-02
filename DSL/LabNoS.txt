@@ -9,7 +9,7 @@ B18: Radix sort
 C19: Pinnacle Club (Singly LL)
 C22: Vanilla & Butterscotch Ice Cream (LL + Set Operations)
 
-D26: Leetcode 20 (Stack to check opening & closing order)
+D26: Parenthesis (Stack to check opening & closing order)
 D27: Infix to Postfix (Stack)
 
 E29: Queues (Enqueue and Dequeue)

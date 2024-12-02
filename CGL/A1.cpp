@@ -71,7 +71,7 @@ void poly::display() {
     cout << "Vertex " << (i + 1) << ": (" << p[i].x << ", " << p[i].y << ")\n";
   do {
     cout << "\n-=-=- MENU: -=-=-";
-    cout << cout << "\n1. Scan Line Fill";
+    cout << "\n1. Scan Line Fill";
     cout << "\n2. Exit ";
     cout << "\n\nEnter your choice: ";
     cin >> ch;

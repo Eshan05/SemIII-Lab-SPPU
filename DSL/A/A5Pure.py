@@ -1,134 +1,106 @@
-"""
-* Eshan Nahar
-5.  Write a python program to compute following operations on String:
-a)	To display word with the longest length
-b)	To determines the frequency of occurrence of particular character in the string
-c)	To check whether given string is palindrome or not 
-d)	To display index of first appearance of the substring 
-e)	To count the occurrences of each word in a given string
-"""
+# Function to display the word with the longest length
+def longest_word(string):
+	words = []
+	current_word = ""
+	
+	# Split the string into words
+	for char in string:
+		if char != ' ':
+			current_word += char
+		else:
+				if current_word:
+					words.append(current_word)
+					current_word = ""
+	if current_word:  # Add the last word if any
+		words.append(current_word)
 
-def Display_word_with_longest_length() :
-	Str = input("Enter the main string : ")  # Its assumed that string contain only characters and spaces 
-	M_str = ""
-	i = 0
-	while( i < len(Str)) :
-		word = ""
-		while(Str[i] != ' ') :
-			word += Str[i]
-			i = i + 1
-			if( i == len(Str)) :
-				break
-		if(i != len(Str)) :
-			while(Str[i] == ' ') :
-				i = i + 1
-		if(len(M_str) < len(word)) :
-			M_str = word
-	print("\tWord with longest length is %s having lenght %d\n\n"%(M_str,len(M_str)))
+	longest = ""
+	for word in words:
+		if len(word) > len(longest):
+			longest = word
+	return longest
 
-def Determine_frequency_of_occurrence_of_particular_character_in_string() :
-	Str = input("Enter the string : ")
-	C = input("Enter the character  : ")
-	print("\tString : %s"%Str)
-	print("\tCharacter : %s"%C)
+# Function to determine the frequency of occurrence of a character
+def character_frequency(string, char):
 	count = 0
-	for i in range(len(Str)) :
-		if(Str[i] == C) :
+	for i in range(len(string)):
+		if string[i] == char:
 			count += 1
-	print("\tFrequency of occurrence of character(%s) in string(%s) is %d\n\n"%(C,Str,count))
-	
-def Check_for_palindrome() :
-	Str = input("Enter the string to be checked : ")
-	b = 0
-	e = len(Str) - 1
-	while( b < e) :
-		if(Str[b] != Str[e]) :
-			break
-		b += 1
-		e -= 1
-	if(b < e) :
-		print("\t%s is not an palindromic string\n\n"%Str)
-	else :
-		print("\t%s is an palindromic string\n\n"%Str)
-	
-def display_index_of_first_appearance_of_the_substring() :
-	M = input("Enter the main string : ")
-	S = input("Enter the sub string to check : ")
-	print("Main String: %s"%M)
-	print("Substring: %s"%S)
-	L1 = len(M)
-	L2 = len(S)
-	if(L1 >= L2) :
-		for i in range((L1 - L2 + 1)) :
-			flag = 1
-			for j in range(L2):
-				if(M[i+j] != S[j]) :
-					flag = 0
-					break
-			if(flag == 1) :
-				print("Substring %s found at index %d\n\n"%(S,i))
-				break;
-		if(flag == 0) :
-				print("Substring not found in the main string\n\n")
-	else :
-			print("Substring is greater than main string\n\n")
+	return count
 
-def Count__occurrences_of_each_word_in_given_string() :
-	Str = input("Enter the main string : ")  # Its assumed that string contain only characters and spaces  
-	i = 0
-	Word_array = []
-	Count = []
-	while( i < len(Str)) :
-		word = ""
-		while(Str[i] != ' ') :
-			word += Str[i]
-			i = i + 1
-			if( i == len(Str)) :
+# Function to check whether the given string is a palindrome
+def is_palindrome(string):
+	left = 0
+	right = len(string) - 1
+	while left < right:
+		if string[left] != string[right]:
+			return False
+		left += 1
+		right -= 1
+	return True
+
+# Function to display the index of the first appearance of a substring
+def first_appearance(string, substring):
+	n = len(string)
+	m = len(substring)
+	
+	for i in range(n - m + 1):
+		match = True
+		for j in range(m):
+			if string[i + j] != substring[j]:
+				match = False
 				break
-		if(i != len(Str)) :
-			while(Str[i] == ' ') :
-				i = i + 1
-		if(len(Word_array) == 0) :
-			Word_array.append(word)
-			Count.append(1)
-		else :
-			flag = 1
-			for j in range(len(Word_array)) :
-				if(Word_array[j] == word) :
-					Count[j] += 1
-					flag = 0
-					break
-				if (flag == 1) :
-					Word_array.append(word)
-					Count.append(1)
-	for i in range(len(Word_array)) :
-		print("\t%15s : %d "%(Word_array[i],Count[i]))
-			
+		if match:
+			return i
+	return -1  # Return -1 if not found
 
-def main():
-	while True :
-		print ("\t\t  **** STRING OPERATIONS ****")
-		print ("\t\t1 : Display word with longest length")
-		print ("\t\t2 : Determine the frequency of occurrence of particular character in the string")
-		print ("\t\t3 : Check whether given string is palindrome or not ")
-		print ("\t\t4 : Display index of first appearance of the substring")
-		print ("\t\t5 : Count the occurrences of each word in a given string")
-		print ("\t\t6 : Exit")
-		ch = int(input("Enter your choice : "))
-		if (ch == 6):
-			print ("End of Program")
-			quit()
-		elif (ch == 1) :
-			Display_word_with_longest_length()
-		elif (ch == 2) :
-			Determine_frequency_of_occurrence_of_particular_character_in_string()
-		elif (ch == 3) :
-			Check_for_palindrome()
-		elif (ch == 4) :
-			display_index_of_first_appearance_of_the_substring()
-		elif (ch == 5) :
-			Count__occurrences_of_each_word_in_given_string()
-		else :
-			print ("Wrong choice entered! Try again")
+# Function to count occurrences of each word in a given string
+def word_occurrences(string):
+	words = []
+	current_word = ""
+	
+	# Split the string into words
+	for char in string:
+		if char != ' ':
+			current_word += char
+		else:
+			if current_word:
+				words.append(current_word)
+				current_word = ""
+	if current_word:  # Add the last word if any
+		words.append(current_word)
 
-main()
+	occurrences = {}
+	for word in words:
+		if word in occurrences:
+			occurrences[word] += 1
+		else:
+			occurrences[word] = 1
+	return occurrences
+
+# Main program
+input_string = input("Enter a string: ")
+
+# Display the longest word
+print(f"The longest word is: '{longest_word(input_string)}'")
+
+# Frequency of a particular character
+char_to_check = input("Enter a character to check its frequency: ")
+print(f"The character '{char_to_check}' appears {character_frequency(input_string, char_to_check)} times.")
+
+# Check if the string is a palindrome
+print(f"Is the string a palindrome? {'Yes' if is_palindrome(input_string) else 'No'}")
+
+# First appearance of a substring
+substring_to_find = input("Enter a substring to find its first appearance: ")
+index = first_appearance(input_string, substring_to_find)
+if index != -1:
+	print(f"The first appearance of the substring '{substring_to_find}' is at index {index}.")
+else:
+	print(f"The substring '{substring_to_find}' is not found in the string.")
+
+# Count occurrences of each word
+occurrences = word_occurrences(input_string)
+print("Occurrences of each word:")
+for word, count in occurrences.items():
+	print(f"'{word}': {count} time(s)")
